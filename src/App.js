@@ -18,15 +18,6 @@ const api = new SpotifyWebApi({
   redirectUri: redirect_uri
 });
 
-const scopes = ['playlist-read-private', 'playlist-modify-private', 'playlist-modify-public', 'user-top-read', 'user-library-read', 'user-follow-read'];
-const state = 'spotify-web-app';
-const authorize_url = api.createAuthorizeURL(
-  scopes, 
-  state,
-  false,
-  'token'
-);
-
 const getAccessToken = () => {
   const hash = window.location.hash.substring(1);
 
@@ -118,7 +109,6 @@ const getCardData = async (type, id) => {
     };
   }
 
-
   additionalData.colorData = getColorInfo(colorData);
 
   return {targetData: targetData, additionalData: additionalData};
@@ -184,6 +174,15 @@ function App() {
     }
     return auth_code;
   }
+  
+  const scopes = ['playlist-read-private', 'playlist-modify-private', 'playlist-modify-public', 'user-top-read', 'user-library-read', 'user-follow-read'];
+  const state = 'spotify-web-app';
+  const authorize_url = api.createAuthorizeURL(
+    scopes, 
+    state,
+    false,
+    'token'
+  );
 
   const handleLogin = () => {
     window.location = authorize_url;
