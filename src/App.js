@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client';
 import SpotifyWebApi from 'spotify-web-api-node';
 import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
 import { FastAverageColor } from 'fast-average-color';
+import React, { useEffect, useState } from 'react';
+
 SpotifyWebApi._addMethods(SpotifyWebApiServer);
 
 const redirect_uri = "http://localhost:3000/";
@@ -36,99 +38,142 @@ const getAccessToken = () => {
   return result.access_token;
 }
 
+const getColorInfo = color => {
+  const bgColorMult = 0.3
+  return (
+  {
+    foregroundColor: "white",
+    bgColorMult: bgColorMult,
+    topColor: `rgb(${color.value.map(color => color * (1 + bgColorMult * 2)).join(", ")})`,
+    bottomColor: `rgb(${color.value.map(color => color * (1 - bgColorMult/3)).join(", ")})`
+  }
+  );
+}
+
 export const displayUserInfo = () => {
   if (!api.getAccessToken()) {
     console.log(api.getAccessToken());
     return;
   }
-  const _displayUserInfo = (profileInfo, playlistData, topArtistsData) => {
-    const getColorInfo = color => {
-      const bgColorMult = 0.3
-      return (
-      {
-        foregroundColor: "white",
-        bgColorMult: bgColorMult,
-        topColor: `rgb(${color.value.map(color => color * (1 + bgColorMult * 2)).join(", ")})`,
-        bottomColor: `rgb(${color.value.map(color => color * (1 - bgColorMult/3)).join(", ")})`
-      }
-      );
-    }
-    console.log(profileInfo);
-    console.log(topArtistsData);
-
+  const _displayUserInfo = topArtist => {
     const content_container = document.querySelector(".content-container");
     const root = ReactDOM.createRoot(content_container);
-    const pfpUrl = profileInfo.images[0].url;
-
-    let pfpColors, artistColors;
-
-    fac.getColorAsync(pfpUrl)
-      .then(color => {
-        pfpColors = getColorInfo(color);
-        return fac.getColorAsync(topArtistsData.topArtist.image.url)
-    })
-    .then (color => {
-      artistColors = getColorInfo(color);
-      const topArtist = topArtistsData.topArtist;
-        const content = 
-        <div className = "user-info">
-          <div className="profile" id="user" style={{backgroundImage: `linear-gradient(to top, ${pfpColors.bottomColor}, ${pfpColors.topColor}`, filter: "saturate(2)"}}>
-            <img id='profile-img' src={pfpUrl ? pfpUrl : ""} alt="Spotify Profile" style={{filter: "saturate(0.5)"}}></img>
-            <h1 id='name' style={{color: pfpColors.foregroundColor}}>{profileInfo.display_name}</h1>
-            <div className="profile-stats">
-              <p id="follower-count" style={{color: pfpColors.foregroundColor}}>{formatter.format(profileInfo.followers.total)} Followers</p>
-              <p id="public-playlist-count" style={{color: pfpColors.foregroundColor}}>{playlistData.numPublicPlaylists} Public Playlists</p>
-            </div>
-          </div>
-          <div className="profile" id="top-artist" style={{backgroundImage: `linear-gradient(to top, ${artistColors.bottomColor}, ${artistColors.topColor}`, filter: "saturate(2)"}}>
-            <img id='profile-img' src={topArtist.image.url} alt="Spotify Profile" style={{filter: "saturate(0.5)"}}></img>
-            <h1 id='name' style={{color: artistColors.foregroundColor}}>{topArtistsData.topArtist.name}</h1>
-            <div className="profile-stats">
-              <p id="top-artist-label">Top Artist this Month</p>
-              <p id="follower-count" style={{color: artistColors.foregroundColor}}>{formatter.format(topArtist.followerCount)} Followers</p>
-            </div>
-          </div>
-        </div>;
-
-        root.render(content);
-      })
+  
+    const content = (
+      <div className = "user-info">
+        <InfoCard type={"me"} id="" />
+        <InfoCard type={"artist"} id={topArtist.id} additionalData="top_artist"/>
+      </div>
+    )
+    root.render(content);
   }
 
-  let userData, playlistData, topArtistsData;
-
   api
-    .getMe()
-    .then(data => {
-      userData = data.body;
-      return api.getUserPlaylists(userData.id, {limit: '50'});
-    })
-    .then(data => {
-      const publicPlaylists = data.body.items.filter(playlist => playlist.public);
+    .getMyTopArtists({ time_range: "short_term" })
+      .then(data => {
+        _displayUserInfo(data.body.items[0]);
+      })
+}
 
-      playlistData = {
-        publicPlaylists: publicPlaylists,
-        numPublicPlaylists: publicPlaylists.length
-      };
-      return api.getMyTopArtists({ time_range: "short_term" });
-    })
-    .then (data => {
-      data = data.body;
-      const topArtist = data.items[0];
+const getCardData = async (type, id) => {
+  let targetData = {}
+  let additionalData = {};
 
-      const topArtistData = {
-        name: topArtist.name,
-        followerCount: topArtist.followers.total,
-        image: topArtist.images[0],
-        link: topArtist.external_urls.spotify
-      }
+  const _getColorData = async () => {
+    return fac.getColorAsync(targetData.images[0].url);
+  }
 
-      topArtistsData = {list: data.items, topArtist: topArtistData};
+  const _getUserPlaylistData = async() => {
+    return api.getUserPlaylists(id, {limit: '50'});
+  }
 
-      _displayUserInfo(userData, playlistData, topArtistsData);
-    })
-    .catch(err => {
-      console.log(`Something went wrong: ${err}`);
-    })
+  const _getTargetData = async () => {
+    if (type === "me") {
+      return api.getMe();
+    }
+    if (type === "user") {
+      return api.getUser(id);
+    }
+    if (type === "artist") {
+      return api.getArtist(id);
+    }
+  }
+
+  const _targetData = await _getTargetData();
+  targetData = _targetData.body;
+
+  const colorData = await _getColorData();
+
+  if (type === "user" || type === "me") {
+    if (type === "me") {
+      id = targetData.id;
+    }
+    const playlistData = await _getUserPlaylistData();
+    const publicPlaylists = playlistData.body.items.filter(playlist => playlist.public);
+    additionalData.playlistData = {
+      publicPlaylists: publicPlaylists,
+      numPublicPlaylists: publicPlaylists.length,
+      playlists: playlistData.body.items,
+      numPlaylists: playlistData.body.items.length
+    };
+  }
+
+
+  additionalData.colorData = getColorInfo(colorData);
+
+  return {targetData: targetData, additionalData: additionalData};
+}
+
+export function InfoCard(props) {
+  const type = props.type;
+  const id = props.id;
+
+  const ActualInfoCard = (_props) => {
+    const data = _props.data;
+    const color = data.additionalData.colorData;
+    const targetData = data.targetData;
+    const name = type==="artist"?targetData.name:(type==="user" || type==="me")?targetData.display_name:"PLAYLIST PLACEHOLDER";
+    const imgURL = targetData.images[0].url;
+
+    let firstLabel = "Unknown";
+    let secondLabel = "Unknown";
+    if (type === "user" || type === "me") {
+      firstLabel = `${formatter.format(targetData.followers.total)} Followers`;
+    } 
+    else if (type === "artist") {
+      firstLabel = props.additionalData ===  "top_artist"?"Top artist this month":"Artist";
+    }
+    if (type === "user" || type === "me") {
+      secondLabel = `${data.additionalData.playlistData.numPublicPlaylists} Public Playlists`;
+    } 
+    else if (type === "artist") {
+      secondLabel = `${formatter.format(targetData.followers.total)} Followers`;
+    }
+
+    return (
+    <div className="profile" style={{backgroundImage: `linear-gradient(to top, ${color.bottomColor}, ${color.topColor}`, filter: "saturate(2)"}}>
+      <img id='profile-img' src={imgURL} alt={`Spotify Info Card of type ${type}`} style={{filter: "saturate(0.5)"}}></img>
+      <h1 id='name' style={{color: color.foregroundColor}}>{name}</h1>
+      <div className="profile-stats">
+        <p id="first-card-label" style={{color: color.foregroundColor}}>{firstLabel}</p>
+        <p id="second-card-label" style={{color: color.foregroundColor}}>{secondLabel}</p>
+      </div>
+    </div>
+    );
+  }
+
+  const [data, updateData] = useState();
+  useEffect(() => {
+    const getData = async () => {
+      if (data)
+        return;
+      const resp = await getCardData(type, id);
+      updateData(resp);
+    }
+    getData();
+  });
+
+  return data && <ActualInfoCard data={data} />;
 }
 
 function App() {
