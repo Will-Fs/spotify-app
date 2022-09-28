@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 SpotifyWebApi._addMethods(SpotifyWebApiServer);
 
 const redirect_uri = "http://localhost:3000/";
-const formatter = Intl.NumberFormat("en", {notation: 'compact'});
+const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 var auth_code;
 
 const fac = new FastAverageColor();
@@ -22,9 +22,9 @@ const getAccessToken = () => {
   const hash = window.location.hash.substring(1);
 
   const result = hash.split('&').reduce(function (res, item) {
-      var parts = item.split('=');
-      res[parts[0]] = parts[1];
-      return res;
+    var parts = item.split('=');
+    res[parts[0]] = parts[1];
+    return res;
   }, {});
   return result.access_token;
 }
@@ -32,12 +32,12 @@ const getAccessToken = () => {
 const getColorInfo = color => {
   const bgColorMult = 0.3
   return (
-  {
-    foregroundColor: "white",
-    bgColorMult: bgColorMult,
-    topColor: `rgb(${color.value.map(color => color * (1 + bgColorMult * 2)).join(", ")})`,
-    bottomColor: `rgb(${color.value.map(color => color * (1 - bgColorMult/3)).join(", ")})`
-  }
+    {
+      foregroundColor: "white",
+      bgColorMult: bgColorMult,
+      topColor: `rgb(${color.value.map(color => color * (1 + bgColorMult * 2)).join(", ")})`,
+      bottomColor: `rgb(${color.value.map(color => color * (1 - bgColorMult / 3)).join(", ")})`
+    }
   );
 }
 
@@ -49,11 +49,11 @@ export const displayUserInfo = () => {
   const _displayUserInfo = topArtist => {
     const content_container = document.querySelector(".content-container");
     const root = ReactDOM.createRoot(content_container);
-  
+
     const content = (
-      <div className = "user-info">
+      <div className="user-info">
         <InfoCard type={"me"} id="" />
-        <InfoCard type={"artist"} id={topArtist.id} additionalData="top_artist"/>
+        <InfoCard type={"artist"} id={topArtist.id} additionalData="top_artist" />
       </div>
     )
     root.render(content);
@@ -61,21 +61,21 @@ export const displayUserInfo = () => {
 
   api
     .getMyTopArtists({ time_range: "short_term" })
-      .then(data => {
-        _displayUserInfo(data.body.items[0]);
-      })
+    .then(data => {
+      _displayUserInfo(data.body.items[0]);
+    })
 }
 
 const getCardData = async (type, id) => {
-  let targetData = {}
+  let targetData = {};
   let additionalData = {};
 
   const _getColorData = async () => {
     return fac.getColorAsync(targetData.images[0].url);
   }
 
-  const _getUserPlaylistData = async() => {
-    return api.getUserPlaylists(id, {limit: '50'});
+  const _getUserPlaylistData = async () => {
+    return api.getUserPlaylists(id, { limit: '50' });
   }
 
   const _getTargetData = async () => {
@@ -111,7 +111,7 @@ const getCardData = async (type, id) => {
 
   additionalData.colorData = getColorInfo(colorData);
 
-  return {targetData: targetData, additionalData: additionalData};
+  return { targetData: targetData, additionalData: additionalData };
 }
 
 export function InfoCard(props) {
@@ -122,33 +122,33 @@ export function InfoCard(props) {
     const data = _props.data;
     const color = data.additionalData.colorData;
     const targetData = data.targetData;
-    const name = type==="artist"?targetData.name:(type==="user" || type==="me")?targetData.display_name:"PLAYLIST PLACEHOLDER";
+    const name = type === "artist" ? targetData.name : (type === "user" || type === "me") ? targetData.display_name : "PLAYLIST PLACEHOLDER";
     const imgURL = targetData.images[0].url;
 
     let firstLabel = "Unknown";
     let secondLabel = "Unknown";
     if (type === "user" || type === "me") {
       firstLabel = `${formatter.format(targetData.followers.total)} Followers`;
-    } 
+    }
     else if (type === "artist") {
-      firstLabel = props.additionalData ===  "top_artist"?"Top artist this month":"Artist";
+      firstLabel = props.additionalData === "top_artist" ? "Top artist this month" : "Artist";
     }
     if (type === "user" || type === "me") {
       secondLabel = `${data.additionalData.playlistData.numPublicPlaylists} Public Playlists`;
-    } 
+    }
     else if (type === "artist") {
       secondLabel = `${formatter.format(targetData.followers.total)} Followers`;
     }
 
     return (
-    <div className="profile" style={{backgroundImage: `linear-gradient(to top, ${color.bottomColor}, ${color.topColor}`, filter: "saturate(2)"}}>
-      <img id='profile-img' src={imgURL} alt={`Spotify Info Card of type ${type}`} style={{filter: "saturate(0.5)"}}></img>
-      <h1 id='name' style={{color: color.foregroundColor}}>{name}</h1>
-      <div className="profile-stats">
-        <p id="first-card-label" style={{color: color.foregroundColor}}>{firstLabel}</p>
-        <p id="second-card-label" style={{color: color.foregroundColor}}>{secondLabel}</p>
+      <div className="profile" style={{ backgroundImage: `linear-gradient(to top, ${color.bottomColor}, ${color.topColor}`, filter: "saturate(2)" }}>
+        <img id='profile-img' src={imgURL} alt={`Spotify Info Card of type ${type}`} style={{ filter: "saturate(0.5)" }}></img>
+        <h1 id='name' style={{ color: color.foregroundColor }}>{name}</h1>
+        <div className="profile-stats">
+          <p id="first-card-label" style={{ color: color.foregroundColor }}>{firstLabel}</p>
+          <p id="second-card-label" style={{ color: color.foregroundColor }}>{secondLabel}</p>
+        </div>
       </div>
-    </div>
     );
   }
 
@@ -169,16 +169,20 @@ export function InfoCard(props) {
 function App() {
   const getAuthCode = () => {
     auth_code = getAccessToken();
+    if (!auth_code) auth_code = sessionStorage.getItem("willfs-spotify-auth-code");
+    sessionStorage.removeItem("willfs-spotify-auth-code");
     if (auth_code !== null) {
+      sessionStorage.setItem("willfs-spotify-auth-code", auth_code);
       api.setAccessToken(auth_code);
+      window.history.pushState({}, null, "/");
     }
     return auth_code;
   }
-  
+
   const scopes = ['playlist-read-private', 'playlist-modify-private', 'playlist-modify-public', 'user-top-read', 'user-library-read', 'user-follow-read'];
   const state = 'spotify-web-app';
   const authorize_url = api.createAuthorizeURL(
-    scopes, 
+    scopes,
     state,
     false,
     'token'
