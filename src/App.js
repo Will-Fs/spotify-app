@@ -46,7 +46,8 @@ const getColorInfo = color => {
 
 export const displayUserInfo = () => {
   if (!api.getAccessToken()) {
-    console.log(api.getAccessToken());
+    console.log(getAccessToken());
+
     return;
   }
   const _displayUserInfo = (topArtist, topTrack) => {
@@ -216,7 +217,7 @@ export function InfoCard(props) {
 function App() {
   const getAuthCode = () => {
     auth_code = getAccessToken();
-    // if (!auth_code) auth_code = sessionStorage.getItem("willfs-spotify-auth-code");
+    console.log(`Auth Code: ${auth_code}`)
     sessionStorage.removeItem("willfs-spotify-auth-code");
     if (auth_code !== null) {
       // sessionStorage.setItem("willfs-spotify-auth-code", auth_code);
