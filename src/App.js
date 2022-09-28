@@ -1,5 +1,5 @@
 import './App.css';
-import { client_id } from './secrets';
+import { client_id, redirect_uri } from './secrets';
 import ReactDOM from 'react-dom/client';
 import SpotifyWebApi from 'spotify-web-api-node';
 import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
@@ -10,7 +10,6 @@ import {setImageSize} from "./imageSize";
 
 SpotifyWebApi._addMethods(SpotifyWebApiServer);
 
-const redirect_uri = window.location;
 const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 var auth_code;
 
@@ -217,10 +216,10 @@ export function InfoCard(props) {
 function App() {
   const getAuthCode = () => {
     auth_code = getAccessToken();
-    if (!auth_code) auth_code = sessionStorage.getItem("willfs-spotify-auth-code");
+    // if (!auth_code) auth_code = sessionStorage.getItem("willfs-spotify-auth-code");
     sessionStorage.removeItem("willfs-spotify-auth-code");
     if (auth_code !== null) {
-      sessionStorage.setItem("willfs-spotify-auth-code", auth_code);
+      // sessionStorage.setItem("willfs-spotify-auth-code", auth_code);
       api.setAccessToken(auth_code);
       window.history.pushState({}, null, "/");
     }
