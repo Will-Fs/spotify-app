@@ -31,9 +31,10 @@ const getAccessToken = () => {
 
 const getColorInfo = color => {
   const bgColorMult = 0.3
+  const avgColor = color.value.slice(0, 3).reduce((a, b) => a + b) / 3;
   return (
     {
-      foregroundColor: "white",
+      foregroundColor: avgColor > 120 ? "black" : "white",
       bgColorMult: bgColorMult,
       topColor: `rgb(${color.value.map(color => color * (1 + bgColorMult * 2)).join(", ")})`,
       bottomColor: `rgb(${color.value.map(color => color * (1 - bgColorMult / 3)).join(", ")})`
@@ -46,24 +47,33 @@ export const displayUserInfo = () => {
     console.log(api.getAccessToken());
     return;
   }
-  const _displayUserInfo = topArtist => {
+  const _displayUserInfo = (topArtist, topTrack) => {
     const content_container = document.querySelector(".content-container");
     const root = ReactDOM.createRoot(content_container);
 
     const content = (
       <div className="user-info">
         <InfoCard type={"me"} id="" />
-        <InfoCard type={"artist"} id={topArtist.id} additionalData="top_artist" />
+        <InfoCard type={"artist"} id={topArtist.id} additionalData={{type: "top_artist", time_frame: "short"}} />
+        <InfoCard type={"track"} id={topTrack.id} additionalData={{type: "top_track", time_frame: "short"}}/>
       </div>
     )
     root.render(content);
   }
 
+  let topArtist;
+
   api
     .getMyTopArtists({ time_range: "short_term" })
-    .then(data => {
-      _displayUserInfo(data.body.items[0]);
-    })
+      .then(data => {
+        topArtist = data.body.items[0];
+        return api.getMyTopTracks({time_range: "short_term"});
+      })
+      .then(data => {
+        const topTrack = data.body.items[0];
+        _displayUserInfo(topArtist, topTrack);
+      })
+
 }
 
 const getCardData = async (type, id) => {
@@ -88,10 +98,18 @@ const getCardData = async (type, id) => {
     if (type === "artist") {
       return api.getArtist(id);
     }
+    if (type === "playlist") {
+      return api.getPlaylist(id);
+    }
+    if (type === "track") {
+      return api.getTrack(id);
+    }
   }
 
   const _targetData = await _getTargetData();
   targetData = _targetData.body;
+  if (type === "track")
+    targetData.images = targetData.album.images;
 
   const colorData = await _getColorData();
 
@@ -122,31 +140,48 @@ export function InfoCard(props) {
     const data = _props.data;
     const color = data.additionalData.colorData;
     const targetData = data.targetData;
-    const name = type === "artist" ? targetData.name : (type === "user" || type === "me") ? targetData.display_name : "PLAYLIST PLACEHOLDER";
+    const name = (type === "artist" || type === "track") ? targetData.name : (type === "user" || type === "me") ? targetData.display_name : "PLACEHOLDER";
     const imgURL = targetData.images[0].url;
 
     let firstLabel = "Unknown";
     let secondLabel = "Unknown";
     if (type === "user" || type === "me") {
       firstLabel = `${formatter.format(targetData.followers.total)} Followers`;
+      // secondLabel = `${data.additionalData.playlistData.numPublicPlaylists} Public Playlists`;
     }
     else if (type === "artist") {
-      firstLabel = props.additionalData === "top_artist" ? "Top artist this month" : "Artist";
+      firstLabel = `${formatter.format(targetData.followers.total)} Followers`;
+      secondLabel = "Artist";
     }
-    if (type === "user" || type === "me") {
-      secondLabel = `${data.additionalData.playlistData.numPublicPlaylists} Public Playlists`;
+    else if (type === "playlist") {
+      console.log(data);
     }
-    else if (type === "artist") {
-      secondLabel = `${formatter.format(targetData.followers.total)} Followers`;
+    else if (type === "track") {
+      firstLabel = targetData.artists[0].name;
+      secondLabel = "Track"
     }
 
+    const additionalInfoType = props.additionalData?.type;
+
+    const needsCardTitle = ["top_track", "top_artist"].includes(additionalInfoType) || type === "me";
+    const needsSecondaryLabel = !needsCardTitle;
+    const cardTitleText = 
+      additionalInfoType === "top_track" ? "Top track this month" : 
+      additionalInfoType === "top_artist" ? "Top artist this month" : 
+      type === "me" ? "You" : 
+      "Placeholder";
+    let cardTitle = null;
+    if (needsCardTitle)
+      cardTitle = <h2 class="card-title" style={{ color: color.foregroundColor }}>{cardTitleText}</h2>;
+
     return (
-      <div className="profile" style={{ backgroundImage: `linear-gradient(to top, ${color.bottomColor}, ${color.topColor}`, filter: "saturate(2)" }}>
+      <div className={`card-large ${type === "me" ? "card-me" : ""}`} style={{ backgroundImage: `linear-gradient(to top, ${color.bottomColor}, ${color.topColor}`, filter: "saturate(2)" }}>
+        {cardTitle}
         <img id='profile-img' src={imgURL} alt={`Spotify Info Card of type ${type}`} style={{ filter: "saturate(0.5)" }}></img>
         <h1 id='name' style={{ color: color.foregroundColor }}>{name}</h1>
         <div className="profile-stats">
-          <p id="first-card-label" style={{ color: color.foregroundColor }}>{firstLabel}</p>
-          <p id="second-card-label" style={{ color: color.foregroundColor }}>{secondLabel}</p>
+          <h2 class="first-card-label " style={{ color: color.foregroundColor }}>{firstLabel}</h2>
+          {needsSecondaryLabel ? <p class="second-card-label" style={{ color: color.foregroundColor }}>{secondLabel}</p> : null}
         </div>
       </div>
     );
@@ -203,7 +238,6 @@ function App() {
 
   return (
     <div className='container'>
-      <h1 className="title">Spotify Web App</h1>
       {content}
     </div>
   );
