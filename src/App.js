@@ -221,7 +221,7 @@ function App() {
     if (auth_code !== null) {
       // sessionStorage.setItem("willfs-spotify-auth-code", auth_code);
       api.setAccessToken(auth_code);
-      window.history.pushState({}, null, "/");
+      // window.history.pushState({}, null, "/");
     }
     return auth_code;
   }
