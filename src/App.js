@@ -5,6 +5,8 @@ import SpotifyWebApi from 'spotify-web-api-node';
 import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
 import { FastAverageColor } from 'fast-average-color';
 import React, { useEffect, useState } from 'react';
+import {setImageSize} from "./imageSize";
+
 
 SpotifyWebApi._addMethods(SpotifyWebApiServer);
 
@@ -30,14 +32,15 @@ const getAccessToken = () => {
 }
 
 const getColorInfo = color => {
-  const bgColorMult = 0.3
+  const bgColorMult = 0.3;
   const avgColor = color.value.slice(0, 3).reduce((a, b) => a + b) / 3;
   return (
     {
       foregroundColor: avgColor > 120 ? "black" : "white",
       bgColorMult: bgColorMult,
       topColor: `rgb(${color.value.map(color => color * (1 + bgColorMult * 2)).join(", ")})`,
-      bottomColor: `rgb(${color.value.map(color => color * (1 - bgColorMult / 3)).join(", ")})`
+      bottomColor: `rgb(${color.value.map(color => color * (1 - bgColorMult / 3)).join(", ")})`,
+      bgTopColor: `rgb(${color.value.map(color => (color * 130/avgColor) ** 1.1).join(", ")})`
     }
   );
 }
@@ -142,11 +145,13 @@ export function InfoCard(props) {
     const targetData = data.targetData;
     const name = (type === "artist" || type === "track") ? targetData.name : (type === "user" || type === "me") ? targetData.display_name : "PLACEHOLDER";
     const imgURL = targetData.images[0].url;
+    const foregroundColor = type === "me" ? "var(--body-foreground-color)" : color.foregroundColor;
 
     let firstLabel = "Unknown";
     let secondLabel = "Unknown";
     if (type === "user" || type === "me") {
-      firstLabel = `${formatter.format(targetData.followers.total)} Followers`;
+      
+      firstLabel = `${formatter.format(targetData.followers.total)} Followers • ${data.additionalData.playlistData.numPublicPlaylists} Public Playlists`;
       // secondLabel = `${data.additionalData.playlistData.numPublicPlaylists} Public Playlists`;
     }
     else if (type === "artist") {
@@ -163,25 +168,33 @@ export function InfoCard(props) {
 
     const additionalInfoType = props.additionalData?.type;
 
-    const needsCardTitle = ["top_track", "top_artist"].includes(additionalInfoType) || type === "me";
-    const needsSecondaryLabel = !needsCardTitle;
+    const needsCardTitle = ["top_track", "top_artist"].includes(additionalInfoType);
+    const needsSecondaryLabel = !needsCardTitle && type !== "me";
     const cardTitleText = 
       additionalInfoType === "top_track" ? "Top track this month" : 
       additionalInfoType === "top_artist" ? "Top artist this month" : 
-      type === "me" ? "You" : 
       "Placeholder";
     let cardTitle = null;
     if (needsCardTitle)
-      cardTitle = <h2 class="card-title" style={{ color: color.foregroundColor }}>{cardTitleText}</h2>;
+      cardTitle = <h2 className="card-title" style={{ color: foregroundColor }}>{cardTitleText}</h2>;
+
+    const cardStyle = type !== "me" ? 
+    { backgroundImage: `linear-gradient(to top, ${color.bottomColor}, ${color.topColor}`, filter: "saturate(2)" } : null;
+
+    if (type === "me") {
+      const root = document.documentElement;
+      root.style.setProperty("--user-info-bg-color", color.bgTopColor);
+    }
+
 
     return (
-      <div className={`card-large ${type === "me" ? "card-me" : ""}`} style={{ backgroundImage: `linear-gradient(to top, ${color.bottomColor}, ${color.topColor}`, filter: "saturate(2)" }}>
+      <div className={`card-large ${type === "me" ? "card-me" : ""}`} style={cardStyle}>
         {cardTitle}
-        <img id='profile-img' src={imgURL} alt={`Spotify Info Card of type ${type}`} style={{ filter: "saturate(0.5)" }}></img>
-        <h1 id='name' style={{ color: color.foregroundColor }}>{name}</h1>
+        <img onLoad = {setImageSize} id='profile-img' src={imgURL} alt={`Spotify Info Card of type ${type}`} style={type !== "me" ? { filter: "saturate(0.5)" } : null}></img>
         <div className="profile-stats">
-          <h2 class="first-card-label " style={{ color: color.foregroundColor }}>{firstLabel}</h2>
-          {needsSecondaryLabel ? <p class="second-card-label" style={{ color: color.foregroundColor }}>{secondLabel}</p> : null}
+          <h1 id='name' style={{ color: foregroundColor }}>{name}</h1>
+          <h2 className="first-card-label " style={{ color: foregroundColor }}>{firstLabel}</h2>
+          {needsSecondaryLabel ? <p className="second-card-label" style={{ color: foregroundColor }}>{secondLabel}</p> : null}
         </div>
       </div>
     );

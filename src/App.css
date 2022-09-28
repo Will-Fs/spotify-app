@@ -7,11 +7,13 @@
   --body-foreground-light: black;
   --body-foreground-color: var(--body-foreground-dark);
 
-  --outline-opacity: 50%;
+  --outline-opacity: 0;
   --primary-outline: rgba(255, 0, 0, var(--outline-opacity));
   --secondary-outline: rgba(0, 0, 255, var(--outline-opacity));
   --tertiary-outline: rgba(0, 200, 0, var(--outline-opacity));
   --quaternary-outline: rgba(120, 120, 120, var(--outline-opacity));
+
+  --user-info-bg-color: var(--body-bg-color);
 }
 
 body {
@@ -22,10 +24,9 @@ body {
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
-  margin-top: 20px;
-  height: 80vh;
+  height: 90vh;
   outline: 3px solid var(--primary-outline);
 }
 
@@ -35,35 +36,62 @@ body {
 }
 
 .content-container {
-  width: 75%;
-  height: 75%;
+  width: 100%;
   outline: 3px solid var(--secondary-outline);
 }
 
 .user-info {
-  width:  100%;
+  width: 100%;
   outline: 3px solid var(--tertiary-outline);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  padding-top: 30px;
+  height: 60vh;
+  background-image: linear-gradient(to top, var(--body-bg-color), var(--user-info-bg-color));
 }
 
-
-.card-large, .card-me {
+.card-large {
   width: calc(25% - 10px);
   padding: 5px;
   border-radius: 10px;
 }
 
-.card-me {
-  width: calc(25% - 10px);
-}
-
-.card-large, .card-me {
+.card-large {
   display: flex;
   flex-direction: column;
   align-items: center;
   outline: 3px solid var(--quaternary-outline);
+  box-shadow: 0 0 2px 2px rgba(255, 255, 255, 0.2);
+}
+
+.card-me {
+  box-shadow: none;
+  width: calc(40% - 10px);
+  height: 80%;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: right;
+}
+
+.card-me .profile-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 70%;
+  justify-content: end;
+  align-items: baseline;
+}
+
+.card-me h2 {
+  font-size: 20px;
+}
+
+.card-me img {
+  max-width: none !important;
+  min-width: 300px;
+  width: 50% !important;
 }
 
 .profile-info {
