@@ -10,7 +10,7 @@ import {setImageSize} from "./imageSize";
 
 SpotifyWebApi._addMethods(SpotifyWebApiServer);
 
-const redirect_uri = "http://localhost:3000/";
+const redirect_uri = window.location;
 const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 var auth_code;
 
