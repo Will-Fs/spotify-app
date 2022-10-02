@@ -6,6 +6,7 @@ import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
 import { FastAverageColor } from 'fast-average-color';
 import React, { useEffect, useState } from 'react';
 import {setImageSize} from "./imageSize";
+import * as Vibrant from "node-vibrant";
 
 
 SpotifyWebApi._addMethods(SpotifyWebApiServer);
@@ -31,21 +32,24 @@ const getAccessToken = () => {
 }
 
 const getColorInfo = color => {
+  console.log(color);
+  color = color.LightVibrant.getRgb();
   const bgColorMult = 0.3;
-  const avgColor = color.value.slice(0, 3).reduce((a, b) => a + b) / 3;
+  const avgColor = color.slice(0, 3).reduce((a, b) => a + b) / 3;
   return (
     {
       foregroundColor: avgColor > 120 ? "black" : "white",
       bgColorMult: bgColorMult,
-      topColor: `rgb(${color.value.map(color => color * (1 + bgColorMult * 2)).join(", ")})`,
-      bottomColor: `rgb(${color.value.map(color => color * (1 - bgColorMult / 3)).join(", ")})`,
-      bgTopColor: `rgb(${color.value.map(color => (color * 130/avgColor) ** 1.1).join(", ")})`
+      topColor: `rgb(${color.map(color => color * (1 + bgColorMult * 2)).join(", ")})`,
+      bottomColor: `rgb(${color.map(color => color * (1 - bgColorMult / 3)).join(", ")})`,
+      bgTopColor: `rgb(${color.map(color => (color * 130/avgColor) ** 1.1).join(", ")})`
     }
   );
 }
 
 export const displayUserInfo = () => {
   if (!api.getAccessToken()) {
+    console.log("Could not retrieve API Access Token!");
     console.log(getAccessToken());
 
     return;
@@ -84,7 +88,9 @@ const getCardData = async (type, id) => {
   let additionalData = {};
 
   const _getColorData = async () => {
-    return fac.getColorAsync(targetData.images[0].url);
+    const img = targetData.images[0].url;
+    return Vibrant.from(img).getPalette();
+    // return fac.getColorAsync(img);
   }
 
   const _getUserPlaylistData = async () => {
