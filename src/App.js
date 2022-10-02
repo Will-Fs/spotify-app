@@ -3,10 +3,9 @@ import { client_id, redirect_uri } from './secrets';
 import ReactDOM from 'react-dom/client';
 import SpotifyWebApi from 'spotify-web-api-node';
 import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
-import { FastAverageColor } from 'fast-average-color';
 import React, { useEffect, useState } from 'react';
 import {setImageSize} from "./imageSize";
-import * as Vibrant from "node-vibrant";
+import {getColorData, getColorInfo} from "./utility/colorAnalyzer";
 
 
 SpotifyWebApi._addMethods(SpotifyWebApiServer);
@@ -14,7 +13,6 @@ SpotifyWebApi._addMethods(SpotifyWebApiServer);
 const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 var auth_code;
 
-const fac = new FastAverageColor();
 const api = new SpotifyWebApi({
   clientId: client_id,
   redirectUri: redirect_uri
@@ -29,22 +27,6 @@ const getAccessToken = () => {
     return res;
   }, {});
   return result.access_token;
-}
-
-const getColorInfo = color => {
-  console.log(color);
-  color = color.LightVibrant.getRgb();
-  const bgColorMult = 0.3;
-  const avgColor = color.slice(0, 3).reduce((a, b) => a + b) / 3;
-  return (
-    {
-      foregroundColor: avgColor > 120 ? "black" : "white",
-      bgColorMult: bgColorMult,
-      topColor: `rgb(${color.map(color => color * (1 + bgColorMult * 2)).join(", ")})`,
-      bottomColor: `rgb(${color.map(color => color * (1 - bgColorMult / 3)).join(", ")})`,
-      bgTopColor: `rgb(${color.map(color => (color * 130/avgColor) ** 1.1).join(", ")})`
-    }
-  );
 }
 
 export const displayUserInfo = () => {
@@ -87,12 +69,6 @@ const getCardData = async (type, id) => {
   let targetData = {};
   let additionalData = {};
 
-  const _getColorData = async () => {
-    const img = targetData.images[0].url;
-    return Vibrant.from(img).getPalette();
-    // return fac.getColorAsync(img);
-  }
-
   const _getUserPlaylistData = async () => {
     return api.getUserPlaylists(id, { limit: '50' });
   }
@@ -120,7 +96,7 @@ const getCardData = async (type, id) => {
   if (type === "track")
     targetData.images = targetData.album.images;
 
-  const colorData = await _getColorData();
+  const colorData = await getColorData(targetData.images[0].url);
 
   if (type === "user" || type === "me") {
     if (type === "me") {
