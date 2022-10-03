@@ -1,5 +1,5 @@
 import {getColorData, getColorInfo} from "./colorAnalyzer";
-import {api} from "../App";
+import {api} from "../spotify";
 
 export const getCardData = async (type, id) => {
     let targetData = {};

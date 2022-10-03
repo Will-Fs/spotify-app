@@ -1,37 +1,16 @@
 import './App.css';
-import { client_id, redirect_uri } from './secrets';
 import ReactDOM from 'react-dom/client';
-import SpotifyWebApi from 'spotify-web-api-node';
-import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
 import React, { useEffect, useState } from 'react';
 import {setImageSize} from "./imageSize";
 import {getCardData} from "./utility/targetData";
-
-SpotifyWebApi._addMethods(SpotifyWebApiServer);
+import {api, auth_code, setAuthCode, getAuthorizeURL} from "./spotify"
 
 const formatter = Intl.NumberFormat("en", { notation: 'compact' });
-var auth_code;
-
-export const api = new SpotifyWebApi({
-  clientId: client_id,
-  redirectUri: redirect_uri
-});
-
-const getAccessToken = () => {
-  const hash = window.location.hash.substring(1);
-
-  const result = hash.split('&').reduce(function (res, item) {
-    var parts = item.split('=');
-    res[parts[0]] = parts[1];
-    return res;
-  }, {});
-  return result.access_token;
-}
 
 export const displayUserInfo = () => {
   if (!api.getAccessToken()) {
     console.log("Could not retrieve API Access Token!");
-    console.log(getAccessToken());
+    console.log(`Auth Code: ${auth_code}`);
 
     return;
   }
@@ -144,9 +123,8 @@ export function InfoCard(props) {
 
 function App() {
   const getAuthCode = () => {
-    auth_code = getAccessToken();
+    setAuthCode();
     console.log(`Auth Code: ${auth_code}`)
-    sessionStorage.removeItem("willfs-spotify-auth-code");
     if (auth_code !== null) {
       // sessionStorage.setItem("willfs-spotify-auth-code", auth_code);
       api.setAccessToken(auth_code);
@@ -155,17 +133,9 @@ function App() {
     return auth_code;
   }
 
-  const scopes = ['playlist-read-private', 'playlist-modify-private', 'playlist-modify-public', 'user-top-read', 'user-library-read', 'user-follow-read'];
-  const state = 'spotify-web-app';
-  const authorize_url = api.createAuthorizeURL(
-    scopes,
-    state,
-    false,
-    'token'
-  );
 
   const handleLogin = () => {
-    window.location = authorize_url;
+    window.location = getAuthorizeURL();
   }
 
   let content;
