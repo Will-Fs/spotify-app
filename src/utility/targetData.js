@@ -60,7 +60,6 @@ export const getCardData = async (type, id) => {
             return await getTrack(id);
         case "artist":
             const data = await getArtist(id);
-            console.log(data);
             return data;
         default:
             return null;

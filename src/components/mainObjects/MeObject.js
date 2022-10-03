@@ -1,7 +1,7 @@
 import { api } from "../../spotify"
 import { InfoCard } from "../InfoCard";
 
-export const Me = () => {
+export const renderMe = (root) => {
     let topArtist;
     api
     .getMyTopArtists({ time_range: "short_term" })
@@ -11,10 +11,12 @@ export const Me = () => {
       })
       .then(data => {
         const topTrack = data.body.items[0];
+        const content = 
         <div className="object-info">
             <InfoCard type="me" me={true}></InfoCard>
             <InfoCard type="artist" id={topArtist.id} isTopArtist={true} timeFrame={"short"}></InfoCard>
             <InfoCard type="track" id={topTrack.id} isTopTrack={true} timeFrame={"short"}></InfoCard>
-        </div>
+        </div>;
+        root.render(content);
       });
 }

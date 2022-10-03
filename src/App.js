@@ -2,8 +2,8 @@ import './App.css';
 import ReactDOM from 'react-dom/client';
 import React from 'react';
 import {api, auth_code, setAuthCode, getAuthorizeURL} from "./spotify"
-import { InfoCard } from './components/InfoCard';
-// import { MeObject } from './components/mainObjects/Me';
+import { renderMe } from './components/mainObjects/MeObject';
+//import { InfoCard } from './components/InfoCard';
 
 export const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
@@ -14,33 +14,9 @@ export const displayUserInfo = () => {
 
     return;
   }
-  const _displayUserInfo = (topArtist, topTrack) => {
-    const content_container = document.querySelector(".content-container");
-    const root = ReactDOM.createRoot(content_container);
-
-    const content = (
-      <div className="object-info">
-        <InfoCard type="me" me={true}></InfoCard>
-        <InfoCard type="artist" id={topArtist.id} isTopArtist={true} timeFrame={"short"}></InfoCard>
-        <InfoCard type="track" id={topTrack.id} isTopTrack={true} timeFrame={"short"}></InfoCard>
-      </div>
-    )
-    root.render(content);
-  }
-
-  let topArtist;
-
-  api
-    .getMyTopArtists({ time_range: "short_term" })
-      .then(data => {
-        topArtist = data.body.items[0];
-        return api.getMyTopTracks({time_range: "short_term"});
-      })
-      .then(data => {
-        const topTrack = data.body.items[0];
-        _displayUserInfo(topArtist, topTrack);
-      })
-
+  const content_container = document.querySelector(".content-container");
+  const root = ReactDOM.createRoot(content_container);
+  renderMe(root);
 }
 
 function App() {
@@ -55,23 +31,13 @@ function App() {
     return auth_code;
   }
 
-
   const handleLogin = () => {
     window.location = getAuthorizeURL();
   }
 
-  let content;
-
-  if (getAuthCode()) {
-    content = <div className="content-container"></div>;
-  }
-  else {
-    content = <button onClick={handleLogin}>Login to Spotify</button>
-  }
-
   return (
     <div className='container'>
-      {content}
+      {getAuthCode() ? <div className="content-container"></div> : <button onClick={handleLogin}>Login to Spotify</button>}
     </div>
   );
 }
