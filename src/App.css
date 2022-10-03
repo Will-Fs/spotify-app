@@ -69,15 +69,15 @@ body {
 }
 
 .card-large h1 {
-  font-size: 18px;
+  font-size: 1.1vw;
 }
 
 .card-large h2 {
-  font-size: 13px;
+  font-size: 1vw;
 }
 
 .card-title {
-  font-size: 13px;
+  font-size: 1vw;
 }
 
 .secondary-object-info {
@@ -110,7 +110,7 @@ body {
 }
 
 .card-me h2 {
-  font-size: 20px;
+  font-size: 1vw;
 }
 
 .card-me img {
