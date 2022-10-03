@@ -8,11 +8,13 @@ import { renderMe } from './components/mainObjects/MeObject';
 export const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
 export const displayUserInfo = () => {
+  /*
   if (!api.getAccessToken()) {
     console.error("Could not retrieve API Access Token!");
 
     return;
   }
+  */
   const content_container = document.querySelector(".content-container");
   const root = ReactDOM.createRoot(content_container);
 
@@ -24,11 +26,9 @@ function App() {
     setAuthCode();
     console.log(`Auth Code: ${auth_code ?? "Not found!"}`)
     if (auth_code) {
-      // sessionStorage.setItem("willfs-spotify-auth-code", auth_code);
       console.log("Setting Access Token.")
       api.setAccessToken(auth_code);
       console.log(`Get Access Token: ${api.getAccessToken()}`);
-      // window.history.pushState({}, null, "/");
     }
     return auth_code;
   }
