@@ -61,7 +61,11 @@ const GetApp = async (root) => {
   }
 
   if (!getAuthCode())
-    return <button onClick={handleLogin}>Login to Spotify</button>;
+    return (
+    <div className='login-button-container'>
+      <button id="login-button" onClick={handleLogin}>Login with Spotify</button>
+    </div>
+    )
   else {
     root.render(
       <React.StrictMode>
