@@ -48,6 +48,7 @@ body {
   align-items: center;
   padding-top: 30px;
   height: 60vh;
+  max-height: 500px;
   background-image: linear-gradient(to top, var(--body-bg-color), var(--object-info-bg-color));
 }
 
