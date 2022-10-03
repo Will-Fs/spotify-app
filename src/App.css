@@ -55,6 +55,7 @@ body {
 .card-large {
   width: calc(auto + 20px);
   min-width: 40%;
+  max-width: 20vw;
   padding: 5px;
   border-radius: 10px;
   display: flex;
@@ -68,15 +69,15 @@ body {
 }
 
 .card-large h1 {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .card-large h2 {
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .card-title {
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .secondary-object-info {
