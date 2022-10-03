@@ -87,7 +87,6 @@ body {
   align-items: center;
   flex-wrap: wrap;
   flex-direction: row;
-  padding-bottom: 6vh;
 }
 
 .card-me {
