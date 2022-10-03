@@ -5,7 +5,15 @@ import GetApp from './App';
 import {setImageSize} from "./imageSize";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-GetApp().then( content => {
+root.render(
+  <React.StrictMode>
+      <div className='container'>
+        <h1>Loading the page...</h1>
+      </div>
+  </React.StrictMode>
+)
+GetApp(root).then( content => {
+  
   root.render(
     <React.StrictMode>
       <div className='container'>

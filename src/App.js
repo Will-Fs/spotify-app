@@ -23,14 +23,35 @@ const displayUserInfo = async () => {
     })
 }
 
-const GetApp = async () => {
+const GetApp = async (root) => {
+  root.render(
+    <React.StrictMode>
+      <div className='container'>
+        <h1>Getting your information...</h1> 
+      </div>
+    </React.StrictMode>
+  );
   const getAuthCode = () => {
+    root.render(
+      <React.StrictMode>
+        <div className='container'>
+          <h1>Getting access token...</h1> 
+        </div>
+      </React.StrictMode>
+    );
     setAuthCode();
-    console.log(`Auth Code: ${auth_code ?? "Not found!"}`)
+    console.log(`Auth Code: ${auth_code ?? "Not found!"}`);
     if (auth_code) {
       console.log("Setting Access Token.")
       api.setAccessToken(auth_code);
       console.log(`Get Access Token: ${api.getAccessToken()}`);
+      root.render(
+        <React.StrictMode>
+          <div className='container'>
+            <h1>Got access token...</h1> 
+          </div>
+        </React.StrictMode>
+      );
     }
     return auth_code;
   }
@@ -42,6 +63,13 @@ const GetApp = async () => {
   if (!getAuthCode())
     return <button onClick={handleLogin}>Login to Spotify</button>;
   else {
+    root.render(
+      <React.StrictMode>
+        <div className='container'>
+          <h1>Getting your data...</h1> 
+        </div>
+      </React.StrictMode>
+    );
     return (
       displayUserInfo()
         .then (content => {
