@@ -1,11 +1,11 @@
 import './App.css';
 import ReactDOM from 'react-dom/client';
-import React, { useEffect, useState } from 'react';
-import {setImageSize} from "./imageSize";
-import {getCardData} from "./utility/targetData";
+import React from 'react';
+import {InfoCard} from "./components/InfoCard"
 import {api, auth_code, setAuthCode, getAuthorizeURL} from "./spotify"
+import { NewInfoCard } from './components/InfoCard';
 
-const formatter = Intl.NumberFormat("en", { notation: 'compact' });
+export const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
 export const displayUserInfo = () => {
   if (!api.getAccessToken()) {
@@ -21,8 +21,10 @@ export const displayUserInfo = () => {
     const content = (
       <div className="user-info">
         <InfoCard type={"me"} id="" />
-        <InfoCard type={"artist"} id={topArtist.id} additionalData={{type: "top_artist", time_frame: "short"}} />
-        <InfoCard type={"track"} id={topTrack.id} additionalData={{type: "top_track", time_frame: "short"}}/>
+        <NewInfoCard type="artist" id={topArtist.id} isTopArtist={true} timeFrame={"short"}></NewInfoCard>
+        <NewInfoCard type="track" id={topTrack.id} isTopTrack={true} timeFrame={"short"}></NewInfoCard>
+        {/* <InfoCard type={"artist"} id={topArtist.id} additionalData={{type: "top_artist", time_frame: "short"}} /> */}
+        {/* <InfoCard type={"track"} id={topTrack.id} additionalData={{type: "top_track", time_frame: "short"}}/> */}
       </div>
     )
     root.render(content);
@@ -41,84 +43,6 @@ export const displayUserInfo = () => {
         _displayUserInfo(topArtist, topTrack);
       })
 
-}
-
-export function InfoCard(props) {
-  const type = props.type;
-  const id = props.id;
-
-  const ActualInfoCard = (_props) => {
-    const data = _props.data;
-    const color = data.additionalData.colorData;
-    const targetData = data.targetData;
-    const name = (type === "artist" || type === "track") ? targetData.name : (type === "user" || type === "me") ? targetData.display_name : "PLACEHOLDER";
-    const imgURL = targetData.images[0].url;
-    const foregroundColor = type === "me" ? "var(--body-foreground-color)" : color.foregroundColor;
-
-    let firstLabel = "Unknown";
-    let secondLabel = "Unknown";
-    if (type === "user" || type === "me") {
-      
-      firstLabel = `${formatter.format(targetData.followers.total)} Followers • ${data.additionalData.playlistData.numPublicPlaylists} Public Playlists`;
-    }
-    else if (type === "artist") {
-      firstLabel = `${formatter.format(targetData.followers.total)} Followers`;
-      secondLabel = "Artist";
-    }
-    else if (type === "playlist") {
-      console.log(data);
-    }
-    else if (type === "track") {
-      firstLabel = targetData.artists[0].name;
-      secondLabel = "Track"
-    }
-
-    const additionalInfoType = props.additionalData?.type;
-
-    const needsCardTitle = ["top_track", "top_artist"].includes(additionalInfoType);
-    const needsSecondaryLabel = !needsCardTitle && type !== "me";
-    const cardTitleText = 
-      additionalInfoType === "top_track" ? "Top track this month" : 
-      additionalInfoType === "top_artist" ? "Top artist this month" : 
-      "Placeholder";
-    let cardTitle = null;
-    if (needsCardTitle)
-      cardTitle = <h2 className="card-title" style={{ color: foregroundColor }}>{cardTitleText}</h2>;
-
-    const cardStyle = type !== "me" ? 
-    { backgroundImage: `linear-gradient(to top, ${color.bottomColor}, ${color.topColor}`, filter: "saturate(2)" } : null;
-
-    if (type === "me") {
-      const root = document.documentElement;
-      root.style.setProperty("--user-info-bg-color", color.bgTopColor);
-    }
-
-
-    return (
-      <div className={`card-large ${type === "me" ? "card-me" : ""}`} style={cardStyle}>
-        {cardTitle}
-        <img onLoad = {setImageSize} id='profile-img' src={imgURL} alt={`Spotify Info Card of type ${type}`} style={type !== "me" ? { filter: "saturate(0.5)" } : null}></img>
-        <div className="profile-stats">
-          <h1 id='name' style={{ color: foregroundColor }}>{name}</h1>
-          <h2 className="first-card-label " style={{ color: foregroundColor }}>{firstLabel}</h2>
-          {needsSecondaryLabel ? <p className="second-card-label" style={{ color: foregroundColor }}>{secondLabel}</p> : null}
-        </div>
-      </div>
-    );
-  }
-
-  const [data, updateData] = useState();
-  useEffect(() => {
-    const getData = async () => {
-      if (data)
-        return;
-      const resp = await getCardData(type, id);
-      updateData(resp);
-    }
-    getData();
-  });
-
-  return data && <ActualInfoCard data={data} />;
 }
 
 function App() {

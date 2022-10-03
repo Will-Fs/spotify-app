@@ -2,9 +2,9 @@ import * as Vibrant from "node-vibrant";
 
 
 export const getColorInfo = color => {
-    console.log(color);
+    // console.log(color);
     color = color.LightVibrant.getRgb();
-    const bgColorMult = 0.3;
+    const bgColorMult = 0.2;
     const avgColor = color.slice(0, 3).reduce((a, b) => a + b) / 3;
     return (
       {
