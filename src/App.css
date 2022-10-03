@@ -21,13 +21,17 @@ body {
   color: var(--body-foreground-color);
 }
 
-.container {
+.container, .temp-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   height: 90vh;
   outline: 3px solid var(--primary-outline);
+}
+
+.temp-container {
+  justify-content: center;
 }
 
 .login-button-container {

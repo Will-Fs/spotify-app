@@ -26,7 +26,7 @@ const displayUserInfo = async () => {
 const GetApp = async (root) => {
   root.render(
     <React.StrictMode>
-      <div className='container'>
+      <div className='temp-container'>
         <h1>Getting your information...</h1> 
       </div>
     </React.StrictMode>
@@ -34,7 +34,7 @@ const GetApp = async (root) => {
   const getAuthCode = () => {
     root.render(
       <React.StrictMode>
-        <div className='container'>
+        <div className='temp-container'>
           <h1>Getting access token...</h1> 
         </div>
       </React.StrictMode>
@@ -47,7 +47,7 @@ const GetApp = async (root) => {
       console.log(`Get Access Token: ${api.getAccessToken()}`);
       root.render(
         <React.StrictMode>
-          <div className='container'>
+          <div className='temp-container'>
             <h1>Got access token...</h1> 
           </div>
         </React.StrictMode>
@@ -69,7 +69,7 @@ const GetApp = async (root) => {
   else {
     root.render(
       <React.StrictMode>
-        <div className='container'>
+        <div className='temp-container'>
           <h1>Getting your data...</h1> 
         </div>
       </React.StrictMode>
