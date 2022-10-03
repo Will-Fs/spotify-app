@@ -51,6 +51,7 @@ const getTrack = async id => {
 
 
 export const getCardData = async (type, id) => {
+  try {
     switch (type) {
         case "me":
             return await getMe();
@@ -64,4 +65,7 @@ export const getCardData = async (type, id) => {
         default:
             return null;
     }
+  } catch (e) {
+    console.log(e);
+  }
 }

@@ -9,20 +9,20 @@ export const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
 export const displayUserInfo = () => {
   if (!api.getAccessToken()) {
-    console.log("Could not retrieve API Access Token!");
-    console.log(`Auth Code: ${auth_code}`);
+    console.error("Could not retrieve API Access Token!");
 
     return;
   }
   const content_container = document.querySelector(".content-container");
   const root = ReactDOM.createRoot(content_container);
+  
   renderMe(root);
 }
 
 function App() {
   const getAuthCode = () => {
     setAuthCode();
-    console.log(`Auth Code: ${auth_code}`)
+    console.log(`Auth Code: ${auth_code ?? "Not found!"}`)
     if (auth_code !== null) {
       // sessionStorage.setItem("willfs-spotify-auth-code", auth_code);
       api.setAccessToken(auth_code);
