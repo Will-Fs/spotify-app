@@ -5,15 +5,14 @@ import SpotifyWebApi from 'spotify-web-api-node';
 import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
 import React, { useEffect, useState } from 'react';
 import {setImageSize} from "./imageSize";
-import {getColorData, getColorInfo} from "./utility/colorAnalyzer";
-
+import {getCardData} from "./utility/targetData";
 
 SpotifyWebApi._addMethods(SpotifyWebApiServer);
 
 const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 var auth_code;
 
-const api = new SpotifyWebApi({
+export const api = new SpotifyWebApi({
   clientId: client_id,
   redirectUri: redirect_uri
 });
@@ -65,58 +64,6 @@ export const displayUserInfo = () => {
 
 }
 
-const getCardData = async (type, id) => {
-  let targetData = {};
-  let additionalData = {};
-
-  const _getUserPlaylistData = async () => {
-    return api.getUserPlaylists(id, { limit: '50' });
-  }
-
-  const _getTargetData = async () => {
-    if (type === "me") {
-      return api.getMe();
-    }
-    if (type === "user") {
-      return api.getUser(id);
-    }
-    if (type === "artist") {
-      return api.getArtist(id);
-    }
-    if (type === "playlist") {
-      return api.getPlaylist(id);
-    }
-    if (type === "track") {
-      return api.getTrack(id);
-    }
-  }
-
-  const _targetData = await _getTargetData();
-  targetData = _targetData.body;
-  if (type === "track")
-    targetData.images = targetData.album.images;
-
-  const colorData = await getColorData(targetData.images[0].url);
-
-  if (type === "user" || type === "me") {
-    if (type === "me") {
-      id = targetData.id;
-    }
-    const playlistData = await _getUserPlaylistData();
-    const publicPlaylists = playlistData.body.items.filter(playlist => playlist.public);
-    additionalData.playlistData = {
-      publicPlaylists: publicPlaylists,
-      numPublicPlaylists: publicPlaylists.length,
-      playlists: playlistData.body.items,
-      numPlaylists: playlistData.body.items.length
-    };
-  }
-
-  additionalData.colorData = getColorInfo(colorData);
-
-  return { targetData: targetData, additionalData: additionalData };
-}
-
 export function InfoCard(props) {
   const type = props.type;
   const id = props.id;
@@ -134,7 +81,6 @@ export function InfoCard(props) {
     if (type === "user" || type === "me") {
       
       firstLabel = `${formatter.format(targetData.followers.total)} Followers • ${data.additionalData.playlistData.numPublicPlaylists} Public Playlists`;
-      // secondLabel = `${data.additionalData.playlistData.numPublicPlaylists} Public Playlists`;
     }
     else if (type === "artist") {
       firstLabel = `${formatter.format(targetData.followers.total)} Followers`;
