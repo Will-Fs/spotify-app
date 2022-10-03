@@ -7,7 +7,9 @@ import { renderMe } from './components/mainObjects/MeObject';
 
 export const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
-export const displayUserInfo = () => {
+
+
+const displayUserInfo = async () => {
   /*
   if (!api.getAccessToken()) {
     console.error("Could not retrieve API Access Token!");
@@ -15,13 +17,13 @@ export const displayUserInfo = () => {
     return;
   }
   */
-  const content_container = document.querySelector(".content-container");
-  const root = ReactDOM.createRoot(content_container);
-
-  renderMe(root);
+  return renderMe()
+    .then(content => {
+      return <div className="content-container">{content}</div>;
+    })
 }
 
-function App() {
+const GetApp = async () => {
   const getAuthCode = () => {
     setAuthCode();
     console.log(`Auth Code: ${auth_code ?? "Not found!"}`)
@@ -37,11 +39,18 @@ function App() {
     window.location = getAuthorizeURL();
   }
 
-  return (
-    <div className='container'>
-      {getAuthCode() ? <div className="content-container"></div> : <button onClick={handleLogin}>Login to Spotify</button>}
-    </div>
-  );
+  if (!getAuthCode())
+    return <button onClick={handleLogin}>Login to Spotify</button>;
+  else {
+    return (
+      displayUserInfo()
+        .then (content => {
+          return content;
+        })
+      );
+  }
+
+
 }
 
-export default App;
+export default GetApp;

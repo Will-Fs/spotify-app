@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import { displayUserInfo } from './App';
+import GetApp from './App';
 import {setImageSize} from "./imageSize";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+GetApp().then( content => {
+  root.render(
+    <React.StrictMode>
+      <div className='container'>
+        {content}
+      </div>
+    </React.StrictMode>
+  );
+  setImageSize();
+})
 
-document.body.onload = displayUserInfo;
-setImageSize();
+
+// document.querySelector(".content-container").onload = displayUserInfo;
 
