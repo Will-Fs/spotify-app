@@ -52,17 +52,40 @@ body {
 }
 
 .card-large {
-  width: calc(25% - 10px);
+  width: 40%;
+  min-width: 15%;
   padding: 5px;
   border-radius: 10px;
-}
-
-.card-large {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   outline: 3px solid var(--quaternary-outline);
   box-shadow: 0 0 2px 2px rgba(255, 255, 255, 0.2);
+  text-align: center;
+  height: 40%;
+}
+
+.card-large h1 {
+  font-size: 20px;
+}
+
+.card-large h2 {
+  font-size: 15px;
+}
+
+.card-title {
+  font-size: 15px;
+}
+
+.secondary-object-info {
+  width: calc(50% - 10px);
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .card-me {
@@ -116,6 +139,6 @@ body {
 #profile-img {
   border-radius: 50%;
   width: 100%;
-  max-width: 200px;
+  max-width: 100px;
   max-height: 100%;
 }
