@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import React from 'react';
 import {api, auth_code, setAuthCode, getAuthorizeURL} from "./spotify"
 import { InfoCard } from './components/InfoCard';
+// import { MeObject } from './components/mainObjects/Me';
 
 export const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
@@ -22,9 +23,6 @@ export const displayUserInfo = () => {
         <InfoCard type="me" me={true}></InfoCard>
         <InfoCard type="artist" id={topArtist.id} isTopArtist={true} timeFrame={"short"}></InfoCard>
         <InfoCard type="track" id={topTrack.id} isTopTrack={true} timeFrame={"short"}></InfoCard>
-        {/* <InfoCard type={"me"} id="" /> */}
-        {/* <InfoCard type={"artist"} id={topArtist.id} additionalData={{type: "top_artist", time_frame: "short"}} /> */}
-        {/* <InfoCard type={"track"} id={topTrack.id} additionalData={{type: "top_track", time_frame: "short"}}/> */}
       </div>
     )
     root.render(content);
