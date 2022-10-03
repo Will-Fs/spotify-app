@@ -1,7 +1,7 @@
-import { _getCardData } from "../../utility/targetData";
+import { getCardData } from "../../utility/targetData";
 
 export const getTrackCardData = async (props) => {
-    const d = await _getCardData("track", props.id);
+    const d = await getCardData("track", props.id);
     console.log(d);
 
     const data = d.data;

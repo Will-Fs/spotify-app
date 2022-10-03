@@ -1,9 +1,9 @@
-import { _getCardData } from "../../utility/targetData";
+import { getCardData } from "../../utility/targetData";
 
 const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
 export const getArtistCardData = async (props) => {
-    const d = await _getCardData("artist", props.id);
+    const d = await getCardData("artist", props.id);
     console.log(d);
 
     const data = d.data;

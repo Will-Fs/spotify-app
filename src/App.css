@@ -13,7 +13,7 @@
   --tertiary-outline: rgba(0, 200, 0, var(--outline-opacity));
   --quaternary-outline: rgba(120, 120, 120, var(--outline-opacity));
 
-  --user-info-bg-color: var(--body-bg-color);
+  --object-info-bg-color: var(--body-bg-color);
 }
 
 body {
@@ -40,7 +40,7 @@ body {
   outline: 3px solid var(--secondary-outline);
 }
 
-.user-info {
+.object-info {
   width: 100%;
   outline: 3px solid var(--tertiary-outline);
   display: flex;
@@ -48,7 +48,7 @@ body {
   align-items: center;
   padding-top: 30px;
   height: 60vh;
-  background-image: linear-gradient(to top, var(--body-bg-color), var(--user-info-bg-color));
+  background-image: linear-gradient(to top, var(--body-bg-color), var(--object-info-bg-color));
 }
 
 .card-large {
