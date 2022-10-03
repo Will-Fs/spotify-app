@@ -15,7 +15,7 @@ export const displayUserInfo = () => {
   }
   const content_container = document.querySelector(".content-container");
   const root = ReactDOM.createRoot(content_container);
-  
+
   renderMe(root);
 }
 
@@ -25,7 +25,9 @@ function App() {
     console.log(`Auth Code: ${auth_code ?? "Not found!"}`)
     if (auth_code !== null) {
       // sessionStorage.setItem("willfs-spotify-auth-code", auth_code);
+      console.log("Setting Access Token.")
       api.setAccessToken(auth_code);
+      console.log(`Get Access Token: ${api.getAccessToken()}`);
       // window.history.pushState({}, null, "/");
     }
     return auth_code;
