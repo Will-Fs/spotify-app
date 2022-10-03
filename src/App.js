@@ -23,7 +23,7 @@ function App() {
   const getAuthCode = () => {
     setAuthCode();
     console.log(`Auth Code: ${auth_code ?? "Not found!"}`)
-    if (auth_code !== null) {
+    if (auth_code) {
       // sessionStorage.setItem("willfs-spotify-auth-code", auth_code);
       console.log("Setting Access Token.")
       api.setAccessToken(auth_code);
