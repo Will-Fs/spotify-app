@@ -147,7 +147,8 @@ body {
 
 .card-me h2 {
   font-size: 15px;
-  width: 100%;
+  width: 20vw;
+  text-align: left;
 }
 
 .card-me img {
