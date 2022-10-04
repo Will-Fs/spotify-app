@@ -115,6 +115,7 @@ body {
 .secondary-object-info {
   width: 100%;
   height: calc(50vh - 15px);
+  max-height: 500px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
