@@ -66,21 +66,27 @@ body {
   outline: 3px solid var(--secondary-outline);
 }
 
+.object-info-container {
+  width: 100%;
+  height: calc(50vh - 15px);
+  max-height: 500px;
+  background-image: linear-gradient(to top, var(--body-bg-color), var(--object-info-bg-color));
+  padding-top: 30px;
+
+}
+
 .object-info {
   width: 100%;
   outline: 3px solid var(--tertiary-outline);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding-top: 30px;
-  height: 60vh;
-  max-height: 500px;
-  background-image: linear-gradient(to top, var(--body-bg-color), var(--object-info-bg-color));
+  flex-wrap: wrap;
 }
 
 .card-large {
   width: calc(auto + 20px);
-  min-width: 40%;
+  min-width: 20%;
   max-width: 20vw;
   padding: 5px;
   border-radius: 10px;
@@ -91,26 +97,26 @@ body {
   outline: 3px solid var(--quaternary-outline);
   box-shadow: 0 0 2px 2px rgba(255, 255, 255, 0.2);
   text-align: center;
-  height: 40%;
+  height: 70%;
 }
 
 .card-large h1 {
-  font-size: 1.1vw;
+  font-size: 20px;
 }
 
 .card-large h2 {
-  font-size: 0.8vw;
+  font-size: 15px;
 }
 
 .card-title {
-  font-size: 0.8vw;
+  font-size: 15px;
 }
 
 .secondary-object-info {
-  width: calc(50% - 10px);
-  height: 100%;
+  width: 100%;
+  height: calc(50vh - 15px);
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
   flex-direction: row;
@@ -120,10 +126,13 @@ body {
   box-shadow: none;
   width: calc(40% - 10px);
   height: 80%;
+  width: 50%;
+  max-width: none;
   padding: 5px;
   display: flex;
   flex-direction: row;
   align-items: right;
+  padding-left: 10%;
 }
 
 .card-me .profile-stats {
@@ -136,7 +145,7 @@ body {
 }
 
 .card-me h2 {
-  font-size: 1vw;
+  font-size: 15px;
 }
 
 .card-me img {
@@ -166,7 +175,7 @@ body {
 
 #profile-img {
   border-radius: 50%;
-  width: 100%;
-  max-width: 100px;
-  max-height: 100%;
+  width: 50%;
+  /* max-width: 100px; */
+  /* max-height: 100%; */
 }

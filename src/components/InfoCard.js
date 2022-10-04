@@ -5,6 +5,7 @@ import { getTrackCardData } from './infoCards/TrackCard';
 import { getMeCardData } from './infoCards/MeCard';
 
 export const cardBackground = (bottomColor, topColor) => {
+    // return 'none'
     return `linear-gradient(to top, ${bottomColor}, ${topColor}`;
 }
 
