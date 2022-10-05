@@ -39,6 +39,15 @@ const getArtist = async id => {
   return {data, additionalData};
 }
 
+const getPlaylist = async id => {
+    let data = await api.getPlaylist(id);
+    data = data.body;
+    const colorData = await getColorData(data.images[0].url);
+
+    const additionalData = {colorData: getColorInfo(colorData)};
+    return {data, additionalData};
+}
+
 const getTrack = async id => {
     let data = await api.getTrack(id);
     data = data.body;
@@ -60,8 +69,9 @@ export const getCardData = async (type, id) => {
         case "track":
             return await getTrack(id);
         case "artist":
-            const data = await getArtist(id);
-            return data;
+            return await getArtist(id);
+        case "playlist":
+            return await getPlaylist(id);
         default:
             return null;
     }

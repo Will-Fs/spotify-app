@@ -30,7 +30,7 @@ export const getTrackCardData = async (props) => {
     const titleHeader = isTopTrack ? <h2 className="card-title" style={{color: color.foregroundColor}}>{secondLabel}</h2> : null;
     const name = data.name;
 
-    const secondLabelHeader = !isTopTrack ? <p className="second-card-label" style={{ color: color.foregroundColor }}>{secondLabel}</p> : null
+    const secondLabelHeader = !isTopTrack ? <p className="second-card-label">{secondLabel}</p> : null
 
     return {img, color, titleHeader, firstLabel, name, secondLabelHeader}
 }

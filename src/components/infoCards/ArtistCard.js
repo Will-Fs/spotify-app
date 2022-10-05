@@ -2,7 +2,7 @@ import { getCardData } from "../../utility/targetData";
 
 const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
-export const getArtistCardData = async (props) => {
+export const getArtistCardData = async props => {
     const d = await getCardData("artist", props.id);
 
     const data = d.data;
@@ -12,7 +12,7 @@ export const getArtistCardData = async (props) => {
     const isTopArtist = props.isTopArtist === true;
     const timeFrame = isTopArtist ? props.timeFrame : null;
 
-    const firstLabel = `${formatter.format(data.followers.total)} Followers`;
+    const firstLabel = `${formatter.format(data.followers.total)} Follower${data.followers.total>1?"s":""}`;
     let secondLabel = "Artist";
 
     if (isTopArtist) {

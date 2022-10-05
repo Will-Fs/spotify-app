@@ -3,6 +3,7 @@ import {setImageSize} from "../imageSize"
 import {getArtistCardData} from "./infoCards/ArtistCard"
 import { getTrackCardData } from './infoCards/TrackCard';
 import { getMeCardData } from './infoCards/MeCard';
+import { getPlaylistCardData } from './infoCards/PlaylistCard';
 
 export const cardBackground = (bottomColor, topColor) => {
     // return 'none'
@@ -11,14 +12,15 @@ export const cardBackground = (bottomColor, topColor) => {
 
 export const InfoCardRender = (data) => {
     data = data.data;
-    const bgImage = data.me !== true ? cardBackground(data.color.bottomColor, data.color.topColor) : null
+
+    const bgImage = data.object !== true ? cardBackground(data.color.bottomColor, data.color.topColor) : null
     return (
-        <div className={`card-large ${data.me === true ? "card-me" : ""}`} style={{backgroundImage: bgImage}}>
+        <div className={`card-large ${data.object === true ? "card-object" : ""}`} style={{backgroundImage: bgImage}}>
             {data.titleHeader ?? null}
-            <img onLoad = {setImageSize} id='profile-img' src={data.img} alt={`Spotify Info Card`}></img>
+            <img onLoad={setImageSize} id='profile-img' src={data.img} alt={`Spotify Info Card`}></img>
             <div className="profile-stats">
                 <h1 id='name' style={{ color: data.color.foregroundColor }}>{data.name}</h1>
-                <h2 className="first-card-label " style={{ color: data.color.foregroundColor }}>{data.firstLabel}</h2>
+                <h2 className="first-card-label " style={{ color: data.color.secondaryColor }}>{data.firstLabel}</h2>
             {data.secondLabelHeader ?? null}
           </div>
         </div>
@@ -34,22 +36,22 @@ export const InfoCard = props => {
                 return getTrackCardData(props);
             case "me":
                 return getMeCardData(props);
+            case "playlist":
+                    return getPlaylistCardData(props);
             default:
                 return <h1>Unknown</h1>
         }
     }
     
-
     const [data, updateData] = useState();
     useEffect(() => {
       const getData = async () => {
-        if (data)
-          return;
         const resp = await _getCardData();
+        resp.object = props.object;
         updateData(resp);
       }
       getData();
-    });
+    }, []);
   
     return data && <InfoCardRender data={data} />;
 
