@@ -199,6 +199,7 @@ body {
   flex-wrap: wrap;
   justify-content: space-evenly;
   height: calc(auto + 2vh);
+  margin-top: 30px;
 }
 
 .public-playlists .card-large, .private-playlists .card-large {
