@@ -58,7 +58,7 @@ export const renderMe = async () => {
                 <div className="public-playlists">
                   {data.items.map(playlist => {
                     if (playlist.public === true) {
-                      return <InfoCard type="playlist" id={playlist.id} needsOwner={true} key={uuid()}></InfoCard>;
+                      return <InfoCard type="playlist" id={playlist.id} needsOwner={false} key={uuid()}></InfoCard>;
                     }
                   })}
                 </div>
