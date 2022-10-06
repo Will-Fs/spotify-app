@@ -1,4 +1,4 @@
-import { client_id, redirect_uri } from '../tokens';
+import { client_id, redirect_uri } from './tokens';
 import SpotifyWebApi from 'spotify-web-api-node';
 import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
 import axios from 'axios';
