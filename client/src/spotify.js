@@ -4,6 +4,8 @@ import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
 import axios from 'axios';
 SpotifyWebApi._addMethods(SpotifyWebApiServer);
 
+const postLocation = `${window.location.protocol}//${window.location.hostname}:3001/`;
+
 export var auth_code;
 export var refresh_token;
 
@@ -34,25 +36,15 @@ const getCode = () => {
 }
 
 export const setCodes = async () => {
-/*
-  const codes = getAccessTokens();
-  
-  auth_code = codes.access_token;
-  refresh_token = codes.refresh_token;
-
-  api.setAccessToken(auth_code);
-  api.setAccessToken(refresh_token);
-*/
   const code = getCode();
+
   let codeGrantData;
+  
   if (code !== null) {
-    const loginLocation = `${window.location.protocol}//${window.location.hostname}:3001/login`;
-    codeGrantData = await axios.post(loginLocation, {
-      code,
-    }).then(res => {
-      return res.data
-    }, err => {
+    codeGrantData = await axios.post(postLocation + "login", { code, }).then(res => res.data
+    , err => {
       console.log(`${err.statusCode} Error: ${err.message}`);
+
       return false;      
     });
   }
@@ -60,37 +52,44 @@ export const setCodes = async () => {
   if (codeGrantData) {
     api.setAccessToken(codeGrantData.access_token);
     api.setRefreshToken(codeGrantData.refresh_token);
+
     sessionStorage.setItem("willfs-spotify-access-tokens", 
       JSON.stringify({
         access_token: codeGrantData.access_token, 
         refresh_token: codeGrantData.refresh_token
     }));
+
     return true
   }
   else{
     const tokens = sessionStorage.getItem("willfs-spotify-access-tokens");
     if (!tokens)
       return false;
+
     const {access_token, refresh_token} = JSON.parse(tokens);
+
     if (access_token) {
-      api.setRefreshToken(refresh_token);
-      return api.refreshAccessToken()
-        .then(data => {
-            console.log("Refreshed Token!");
-            api.setAccessToken(data.body.access_token);
-            sessionStorage.setItem("willfs-spotify-access-tokens", 
-              JSON.stringify({
-                access_token: data.body.access_token, 
-                refresh_token: refresh_token
+      return axios.post(postLocation + "refresh", { refresh_token, }).then(
+        res => {
+          const new_access_token = res.data.access_token;
+          api.setAccessToken(new_access_token);
+
+          console.log("Refreshed access token!")
+
+          sessionStorage.setItem("willfs-spotify-access-tokens", 
+            JSON.stringify({
+              access_token: new_access_token, 
+              refresh_token: refresh_token
             }));
-            return true;
-          }          
-        , err => {
-          sessionStorage.removeItem("willfs-spotify-access-tokens");
-          console.log("Error Refreshing!");
-          console.log({err});
-          return false
-        })
+
+          return true;
+      }, err => {
+        console.log(`${err.statusCode} Error: ${err.message}`);
+        console.log("Error Refreshing!");
+
+        sessionStorage.removeItem("willfs-spotify-access-tokens");
+        return false;      
+      });
     }
   }
 }
