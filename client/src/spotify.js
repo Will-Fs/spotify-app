@@ -1,7 +1,7 @@
-import { client_id, client_secret, redirect_uri } from './secrets';
+import { client_id, redirect_uri } from './secrets';
 import SpotifyWebApi from 'spotify-web-api-node';
 import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
-import { FastAverageColor } from 'fast-average-color';
+import axios from 'axios';
 SpotifyWebApi._addMethods(SpotifyWebApiServer);
 
 export var auth_code;
@@ -9,7 +9,6 @@ export var refresh_token;
 
 export const api = new SpotifyWebApi({
   clientId: client_id,
-  clientSecret: client_secret,
   redirectUri: redirect_uri
 });
 
@@ -47,20 +46,24 @@ export const setCodes = async () => {
   const code = getCode();
   let codeGrantData;
   if (code !== null) {
-    codeGrantData = await api.authorizationCodeGrant(code).then(data => data,
-      err => {
-        console.log(`${err.statusCode} Error: ${err.message}`);
-        return false;
+    const loginLocation = `${window.location.protocol}//${window.location.hostname}:3001/login`;
+    codeGrantData = await axios.post(loginLocation, {
+      code,
+    }).then(res => {
+      return res.data
+    }, err => {
+      console.log(`${err.statusCode} Error: ${err.message}`);
+      return false;      
     });
   }
 
   if (codeGrantData) {
-    api.setAccessToken(codeGrantData.body.access_token);
-    api.setRefreshToken(codeGrantData.body.refresh_token);
+    api.setAccessToken(codeGrantData.access_token);
+    api.setRefreshToken(codeGrantData.refresh_token);
     sessionStorage.setItem("willfs-spotify-access-tokens", 
       JSON.stringify({
-        access_token: codeGrantData.body.access_token, 
-        refresh_token: codeGrantData.body.refresh_token
+        access_token: codeGrantData.access_token, 
+        refresh_token: codeGrantData.refresh_token
     }));
     return true
   }
@@ -73,7 +76,7 @@ export const setCodes = async () => {
       api.setRefreshToken(refresh_token);
       return api.refreshAccessToken()
         .then(data => {
-            console.log("Refreshed!");
+            console.log("Refreshed Token!");
             api.setAccessToken(data.body.access_token);
             sessionStorage.setItem("willfs-spotify-access-tokens", 
               JSON.stringify({
