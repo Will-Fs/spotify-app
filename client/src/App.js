@@ -2,18 +2,10 @@ import './App.css';
 import React from 'react';
 import {api, auth_code, setCodes, getAuthorizeURL} from "./spotify"
 import { renderMe } from './components/mainObjects/MeObject';
-//import { InfoCard } from './components/InfoCard';
 
 export const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
 const GetMeInfo = async () => {
-  /*
-  if (!api.getAccessToken()) {
-    console.error("Could not retrieve API Access Token!");
-
-    return;
-  }
-  */
   return renderMe()
     .then(content => {
       return <div className="content-container">{content}</div>;
@@ -22,7 +14,6 @@ const GetMeInfo = async () => {
 
 const displayObject = async () => {
   const path = window.location.pathname;
-  console.log(path);
 
   switch (path) {
     case '/':
@@ -73,7 +64,6 @@ const GetApp = async (root) => {
       return (
         displayObject()
           .then (content => {
-            console.log(window.location);
             window.history.pushState({}, '', window.location.pathname);
             return content;
           })

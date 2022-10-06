@@ -1,4 +1,4 @@
-import { client_id, redirect_uri } from './secrets';
+import { client_id, redirect_uri } from '../tokens';
 import SpotifyWebApi from 'spotify-web-api-node';
 import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
 import axios from 'axios';
@@ -39,7 +39,7 @@ export const setCodes = async () => {
   const code = getCode();
 
   let codeGrantData;
-  
+
   if (code !== null) {
     codeGrantData = await axios.post(postLocation + "login", { code, }).then(res => res.data
     , err => {

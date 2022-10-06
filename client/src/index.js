@@ -25,7 +25,3 @@ GetApp(root).then( content => {
 .then(() => {
   setImageSize();
 })
-
-
-// document.querySelector(".content-container").onload = displayUserInfo;
-
