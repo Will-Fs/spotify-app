@@ -8,7 +8,6 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/login', (req, res) => {
-    console.log("Test!")
     const client_id = "a846973a55a04786886e44060900d84b";   
     const redirect_uri = "http://localhost:3000"
     const client_secret = "fcba9fbe8e4a420a9a7a40434a0e7299";
