@@ -14,8 +14,9 @@ export const renderMe = async () => {
             topArtists.short = data.body.items[0];
             return api.getMyTopTracks({time_range: "short_term"});
           }, err => {
-          error = err;
-          return <h1>{`${err.body.error.status} Error: ${err.body.error.message}`}</h1>
+            error = err;
+            sessionStorage.removeItem("willfs-spotify-access-token")
+            return <h1>{`${err.body.error.status} Error: ${err.body.error.message}`}</h1>
           })
           .then(data => {
             if (error !== null) {
@@ -42,6 +43,8 @@ export const renderMe = async () => {
           })
           .then (data => {
             data = data.body;
+            let i = 0;
+            let j = 0;
             const content = (
             <div className="object-info">
               <div className="object-info-container">
@@ -55,23 +58,25 @@ export const renderMe = async () => {
                 <InfoCard type="track" id={topTracks.long.id} isTopTrack={true} timeFrame={"long"}></InfoCard>
               </div>
               <div className="additional-object-info">
-              <div className="public-playlists">
-                <h1 align="left" style={{marginBottom: "20px", width: "80%"}}>Your Public Playlists</h1>
-                {data.items.map(playlist => {
-                  if (playlist.public === true) {
-                    return <InfoCard type="playlist" id={playlist.id} needsOwner={false} key={uuid()}></InfoCard>;
-                  }
-                })}
-              </div>
-              <div className="private-playlists">
-                <h1 align="left" style={{marginBottom: "20px ", width: "80%"}}>Your Private Playlists</h1>
+                <div className="public-playlists">
+                  <h1 align="left" style={{marginBottom: "20px", width: "80%"}}>Your Public Playlists <a href="#">SEE ALL</a></h1>
                   {data.items.map(playlist => {
-                    if (playlist.public === false) {
-                      return <InfoCard type="playlist" id={playlist.id} needsOwner={true} key={uuid()}></InfoCard>;
+                    if (playlist.public === true && i < 6) {
+                      i++;
+                      return <InfoCard type="playlist" id={playlist.id} needsOwner={false} key={uuid()}></InfoCard>;
                     }
                   })}
                 </div>
-              </div>
+                <div className="private-playlists">
+                  <h1 align="left" style={{marginBottom: "20px ", width: "80%"}}>Your Private Playlists <a href="#">SEE ALL</a></h1>
+                    {data.items.map(playlist => {
+                      if (playlist.public === false && j < 6) {
+                        j++;
+                        return <InfoCard type="playlist" id={playlist.id} needsOwner={true} key={uuid()}></InfoCard>;
+                      }
+                    })}
+                  </div>
+                </div>
             </div>
            
             );

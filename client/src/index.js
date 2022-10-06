@@ -13,7 +13,6 @@ root.render(
   </React.StrictMode>
 )
 GetApp(root).then( content => {
-  
   root.render(
     <React.StrictMode>
       <div className='container'>
