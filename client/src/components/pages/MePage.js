@@ -1,9 +1,9 @@
 import { api } from "../../spotify"
-import { InfoCard } from "../InfoCard";
+import { InfoCard } from "../infoCards/InfoCard";
 import uuid from 'react-uuid';
 
 
-export const renderMe = async () => {
+export const MePage = async () => {
     let topArtists = {};
     let topTracks = {};
     let error = null;

@@ -1,4 +1,4 @@
-import { getCardData } from "../../utility/targetData"
+import { getCardData } from "../../utility/infoCardData"
 
 const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 

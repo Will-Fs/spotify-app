@@ -1,15 +1,22 @@
 import './App.css';
 import React from 'react';
 import {api, auth_code, setCodes, getAuthorizeURL} from "./spotify"
-import { renderMe } from './components/mainObjects/MeObject';
+import { MePage } from './components/pages/MePage';
+// import {}
 
 export const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
-const GetMeInfo = async () => {
-  return renderMe()
+const GetMePage = async () => {
+  return MePage()
     .then(content => {
       return <div className="content-container">{content}</div>;
     })
+}
+
+const PlaylistInfo = async () => {
+  const id = new URLSearchParams(document.location.search).get("id");
+  console.log(id);
+  return <h1>WIP!</h1>
 }
 
 const displayObject = async () => {
@@ -17,11 +24,13 @@ const displayObject = async () => {
 
   switch (path) {
     case '/':
-      return GetMeInfo();
+      return GetMePage();
+    case '/me':
+      return GetMePage();
     case '/playlist':
-      return <h1>WIP!</h1>
+      return PlaylistInfo();
     default:
-      return GetMeInfo();
+      return <h1>Page not found: {path}</h1>
   }
 }
 

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {setImageSize} from "../imageSize"
-import {getArtistCardData} from "./infoCards/ArtistCard"
-import { getTrackCardData } from './infoCards/TrackCard';
-import { getMeCardData } from './infoCards/MeCard';
-import { getPlaylistCardData } from './infoCards/PlaylistCard';
+import {setImageSize} from "../../imageSize"
+import {getArtistCardData} from "./ArtistCard"
+import { getTrackCardData } from './TrackCard';
+import { getMeCardData } from './MeCard';
+import { getPlaylistCardData } from './PlaylistCard';
 
 export const cardBackground = (bottomColor, topColor) => {
     // return 'none'
