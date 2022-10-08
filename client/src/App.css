@@ -328,6 +328,13 @@ body {
     font-weight: 500;
   }
 
+  .track-album-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 80% !important;  
+  }
+
   .track-ribbon p {
     width: 100%;
     /* text-align: center; */
