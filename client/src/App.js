@@ -75,7 +75,8 @@ const GetApp = async (root) => {
       return (
         displayObject()
           .then (content => {
-            window.history.pushState({}, '', window.location.search);
+            if (window.location.pathname === '/' || window.location.pathname === `/me`)
+              window.history.pushState({}, '', window.location.pathname);
             return content;
           })
         );
