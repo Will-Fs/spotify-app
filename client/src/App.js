@@ -68,7 +68,7 @@ const GetApp = async (root) => {
       root.render(
         <React.StrictMode>
           <div className='temp-container'>
-            <h1>Getting your data...</h1> 
+            <h1>Getting data...</h1> 
           </div>
         </React.StrictMode>
       );
