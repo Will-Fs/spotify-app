@@ -33,9 +33,7 @@ const getTimeStuff = (rawDate, rawDuration) => {
 
 export const TrackRibbon = (props) => {
     const data = props.trackData.track;
-
-    console.log(props.trackData);
-    
+        
     const image = data.album.images[0].url;
     const name = data.name;
 

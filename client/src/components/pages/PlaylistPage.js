@@ -2,7 +2,7 @@ import { api } from "../../spotify";
 import { InfoCard } from "../infoCards/InfoCard";
 import { getAllPlaylistTracks, calcLength } from "../../utility/getPlaylistTracks";
 import { TrackRibbon } from "../infoRibbons/TrackRibbon";
-import { uuid } from 'react-uuid';
+import uuid from 'react-uuid';
 
 export const PlaylistPage = async id => {
     let tracks = [];
@@ -37,7 +37,7 @@ export const PlaylistPage = async id => {
           </div>
           {allTracks.map((track) => {
             i++;
-            return <TrackRibbon trackData={allTracks[i-1]} trackNumber={i} />;
+            return <TrackRibbon trackData={allTracks[i-1]} trackNumber={i} key={uuid()}/>;
           })}
         </div>
         <div className="additional-object-info">
