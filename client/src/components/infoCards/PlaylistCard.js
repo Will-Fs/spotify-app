@@ -17,7 +17,7 @@ export const getPlaylistCardData = async props => {
 
     const color = additionalData.colorData;
 
-    let secondLabelHeader, firstLabel;
+    let secondLabelHeader, firstLabel, typeHeader;
     if (needsOwner) {
         firstLabel = data.owner.display_name;
         secondLabelHeader = <p className="second-card-label" style={{color: color.secondaryColor}}>{followers}</p>;
@@ -26,5 +26,11 @@ export const getPlaylistCardData = async props => {
         firstLabel = followers
     }
 
-    return {img, color, titleHeader, firstLabel, name, secondLabelHeader}
+    if (props.object === true) {
+        const root = document.documentElement;
+        root.style.setProperty("--object-info-bg-color", color.bgTopColor);
+        typeHeader = <h6 style={{marginTop: "5px", color: color.secondaryColor}}>PLAYLIST</h6>
+    }
+
+    return {img, color, titleHeader, firstLabel, name, secondLabelHeader, typeHeader}
 }

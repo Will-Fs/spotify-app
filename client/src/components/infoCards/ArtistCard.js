@@ -34,5 +34,12 @@ export const getArtistCardData = async props => {
 
     const secondLabelHeader = !isTopArtist ? <p className="second-card-label" style={{ color: color.foregroundColor }}>{secondLabel}</p> : null
 
-    return {img, color, titleHeader, firstLabel, name, secondLabelHeader}
+    let typeHeader;
+    if (props.object === true) {
+        const root = document.documentElement;
+        root.style.setProperty("--object-info-bg-color", color.bgTopColor);
+        typeHeader = <h6 style={{marginTop: "5px", color: color.secondaryColor}}>PLAYLIST</h6>
+    }
+
+    return {img, color, titleHeader, firstLabel, name, secondLabelHeader, typeHeader}
 }

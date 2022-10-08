@@ -22,6 +22,7 @@ export const InfoCardRender = (data) => {
                 <h1 id='name' style={{ color: data.color.foregroundColor }}>{data.name}</h1>
                 <h2 className="first-card-label " style={{ color: data.color.secondaryColor }}>{data.firstLabel}</h2>
             {data.secondLabelHeader ?? null}
+            {data.typeHeader ?? null}
           </div>
         </div>
     )

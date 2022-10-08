@@ -30,7 +30,14 @@ export const getTrackCardData = async (props) => {
     const titleHeader = isTopTrack ? <h2 className="card-title" style={{color: color.foregroundColor}}>{secondLabel}</h2> : null;
     const name = data.name;
 
-    const secondLabelHeader = !isTopTrack ? <p className="second-card-label">{secondLabel}</p> : null
+    const secondLabelHeader = !isTopTrack ? <p className="second-card-label">{secondLabel}</p> : null;
 
-    return {img, color, titleHeader, firstLabel, name, secondLabelHeader}
+    let typeHeader;
+    if (props.object === true) {
+        const root = document.documentElement;
+        root.style.setProperty("--object-info-bg-color", color.bgTopColor);
+        typeHeader = <h6 style={{marginTop: "5px", color: color.secondaryColor}}>PLAYLIST</h6>
+    }
+
+    return {img, color, titleHeader, firstLabel, name, secondLabelHeader, typeHeader};
 }
