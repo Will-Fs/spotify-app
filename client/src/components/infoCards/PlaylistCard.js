@@ -7,7 +7,7 @@ export const getPlaylistCardData = async props => {
     const data = d.data;
     const additionalData = d.additionalData;
 
-    const name = data.name;
+    let name = data.name;
     const img = data.images[0].url;
 
     const needsOwner = props.needsOwner === true;
@@ -17,7 +17,7 @@ export const getPlaylistCardData = async props => {
 
     const color = additionalData.colorData;
 
-    let secondLabelHeader, firstLabel, typeHeader;
+    let secondLabelHeader, firstLabel, typeHeader, type;
     if (needsOwner) {
         firstLabel = data.owner.display_name;
         secondLabelHeader = <p className="second-card-label" style={{color: color.secondaryColor}}>{followers}</p>;
@@ -29,8 +29,12 @@ export const getPlaylistCardData = async props => {
     if (props.object === true) {
         const root = document.documentElement;
         root.style.setProperty("--object-info-bg-color", color.bgTopColor);
-        typeHeader = <h6 style={{marginTop: "5px", color: color.secondaryColor}}>PLAYLIST</h6>
+        firstLabel = data.description;
+        secondLabelHeader = <p className="second-card-label" style={{color: color.secondaryColor}}>{
+            `${data.owner.display_name}${followers ? ` • ${followers}`:  ""} • ${props.numTracks} songs, ${props.totalTime}`
+            }</p>;
+        type = "playlist"
     }
 
-    return {img, color, titleHeader, firstLabel, name, secondLabelHeader, typeHeader}
+    return {img, color, titleHeader, firstLabel, name, secondLabelHeader, typeHeader, type}
 }

@@ -168,9 +168,32 @@ body {
 }
 
 .card-object img {
-  min-width: 300px;
-  width: 50% !important;
+  width: 300px !important;
+  /* width: 50% !important; */
 }
+
+.card-object.playlist {
+  width: 80%;
+}
+  .card-object.playlist .profile-stats {
+    justify-content: flex-end ;
+    padding-left: 2vw;
+    height: 90%;
+  }
+
+  .card-object.playlist .second-card-label {
+    font-size: 18px;
+    color: var(--body-foreground-color) !important;
+    margin-top: 20px;
+  }
+
+  .card-object.playlist #name {
+    font-size: 50px;
+  }
+
+  .card-object.playlist .first-card-label {
+    margin-top: 20px;
+  }
 
 .profile-info {
   display: flex;
@@ -189,6 +212,18 @@ body {
 .profile-stats p {
   font-size: 12px;
   display: inline-block
+}
+
+.object-bottom-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* margin-top: -50px; */
+}
+
+.object-bottom-info {
+  width: 80%;
+  padding-left: calc(10% + 320px);
 }
 
 .additional-object-info {

@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import {api, auth_code, setCodes, getAuthorizeURL} from "./spotify"
 import { MePage } from './components/pages/MePage';
-// import {}
+import { PlaylistPage } from './components/pages/PlaylistPage';
 
 export const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
@@ -15,8 +15,10 @@ const GetMePage = async () => {
 
 const PlaylistInfo = async () => {
   const id = new URLSearchParams(document.location.search).get("id");
-  console.log(id);
-  return <h1>WIP!</h1>
+  return PlaylistPage(id)
+    .then(content => {
+      return <div className="content-container">{content}</div>;
+    })
 }
 
 const displayObject = async () => {
@@ -73,7 +75,7 @@ const GetApp = async (root) => {
       return (
         displayObject()
           .then (content => {
-            window.history.pushState({}, '', window.location.pathname);
+            window.history.pushState({}, '', window.location.search);
             return content;
           })
         );

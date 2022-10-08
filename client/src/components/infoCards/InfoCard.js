@@ -15,15 +15,19 @@ export const InfoCardRender = (data) => {
 
     const bgImage = data.object !== true ? cardBackground(data.color.bottomColor, data.color.topColor) : null
     return (
-        <div className={`card-large ${data.object === true ? "card-object" : ""}`} style={{backgroundImage: bgImage}}>
+        <div className={`card-large ${data.object === true ? `card-object ${data.type ?? ""}` : ""}`} style={{backgroundImage: bgImage}}>
             {data.titleHeader ?? null}
             <img onLoad={setImageSize} id='profile-img' src={data.img} alt={`Spotify Info Card`}></img>
             <div className="profile-stats">
-                <h1 id='name' style={{ color: data.color.foregroundColor }}>{data.name}</h1>
-                <h2 className="first-card-label " style={{ color: data.color.secondaryColor }}>{data.firstLabel}</h2>
+                {data.name ? 
+                    <h1 id='name' style={{ color: data.color.foregroundColor }} dangerouslySetInnerHTML={{__html: data.name}}></h1>
+                    : null}
+                {data.firstLabel ? 
+                     <h2 className="first-card-label " style={{ color: data.color.secondaryColor }} dangerouslySetInnerHTML={{__html: data.firstLabel}}></h2>
+                    : null}
             {data.secondLabelHeader ?? null}
             {data.typeHeader ?? null}
-          </div>
+            </div>
         </div>
     )
 }
