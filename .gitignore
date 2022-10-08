@@ -25,3 +25,4 @@ yarn-error.log*
 client/src/secrets.js
 client/tokens.js
 server/tokens.js
+.vscode/tasks.json
