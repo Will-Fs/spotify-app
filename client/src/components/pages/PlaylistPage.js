@@ -41,8 +41,6 @@ export const PlaylistPage = async id => {
           })}
         </div>
         <div className="additional-object-info">
-            <h1 align="left" style={{width: "90%"}}>Additional Info</h1>
-
         </div>
       </div>
     )

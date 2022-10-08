@@ -33,6 +33,14 @@ body {
   color: var(--body-foreground-color);
 }
 
+.link {
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
 .container, .temp-container {
   display: flex;
   flex-direction: column;

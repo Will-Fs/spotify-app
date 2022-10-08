@@ -20,7 +20,11 @@ export const InfoCardRender = (data) => {
             <img onLoad={setImageSize} id='profile-img' src={data.img} alt={`Spotify Info Card`}></img>
             <div className="profile-stats">
                 {data.name ? 
-                    <h1 id='name' style={{ color: data.color.foregroundColor }} dangerouslySetInnerHTML={{__html: data.name}}></h1>
+                    <h1 id='name' className={data.link ? "link" : null}
+                    onClick={data.link ?  ()=>{window.location = data.link} : null} 
+                    style={{ color: data.color.foregroundColor}}
+                    dangerouslySetInnerHTML={{__html: data.name}}>
+                    </h1>
                     : null}
                 {data.firstLabel ? 
                      <h2 className="first-card-label " style={{ color: data.color.secondaryColor }} dangerouslySetInnerHTML={{__html: data.firstLabel}}></h2>

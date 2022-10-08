@@ -36,5 +36,7 @@ export const getPlaylistCardData = async props => {
         type = "playlist"
     }
 
-    return {img, color, titleHeader, firstLabel, name, secondLabelHeader, typeHeader, type}
+    let link = `${window.location.origin}/playlist?id=${props.id}`;
+
+    return {img, color, titleHeader, firstLabel, name, secondLabelHeader, typeHeader, type, link}
 }
