@@ -13,7 +13,7 @@ export const getPlaylistCardData = async props => {
     const needsOwner = props.needsOwner === true;
 
     const titleHeader = null;//needsOwner ? data.owner.display_name : null;
-    const followers = data.followers.total > 0 ? `${formatter.format(data.followers.total)} follower${data.followers.total>1?"s":""}` : null;
+    const followers = data.followers.total > 0 ? `${formatter.format(data.followers.total)} like${data.followers.total>1?"s":""}` : null;
 
     const color = additionalData.colorData;
 
