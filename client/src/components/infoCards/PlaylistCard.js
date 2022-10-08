@@ -18,6 +18,7 @@ export const getPlaylistCardData = async props => {
     const color = additionalData.colorData;
 
     let secondLabelHeader, firstLabel, typeHeader, type;
+    let link = `${window.location.origin}/playlist?id=${props.id}`;
     if (needsOwner) {
         firstLabel = data.owner.display_name;
         secondLabelHeader = <p className="second-card-label" style={{color: color.secondaryColor}}>{followers}</p>;
@@ -27,6 +28,7 @@ export const getPlaylistCardData = async props => {
     }
 
     if (props.object === true) {
+        link = null;
         const root = document.documentElement;
         root.style.setProperty("--object-info-bg-color", color.bgTopColor);
         firstLabel = data.description;
@@ -36,7 +38,6 @@ export const getPlaylistCardData = async props => {
         type = "playlist"
     }
 
-    let link = `${window.location.origin}/playlist?id=${props.id}`;
 
     return {img, color, titleHeader, firstLabel, name, secondLabelHeader, typeHeader, type, link}
 }
