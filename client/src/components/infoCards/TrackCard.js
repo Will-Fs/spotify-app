@@ -10,8 +10,8 @@ export const getTrackCardData = async (props) => {
     const isTopTrack = props.isTopTrack === true;
     const timeFrame = isTopTrack ? props.timeFrame : null;
 
-    const firstLabel = data.artists[0].name;
-    let secondLabel = "Track";
+    let firstLabel = data.artists[0].name;
+    let secondLabel = null;
 
     if (isTopTrack) {
         if (timeFrame === "short")
@@ -30,14 +30,43 @@ export const getTrackCardData = async (props) => {
     const titleHeader = isTopTrack ? <h2 className="card-title" style={{color: color.foregroundColor}}>{secondLabel}</h2> : null;
     const name = data.name;
 
-    const secondLabelHeader = !isTopTrack ? <p className="second-card-label">{secondLabel}</p> : null;
+    let secondLabelHeader = !isTopTrack ? <p className="second-card-label">{secondLabel}</p> : null;
 
     let typeHeader;
     if (props.object === true) {
         const root = document.documentElement;
         root.style.setProperty("--object-info-bg-color", color.bgTopColor);
-        typeHeader = <h6 style={{marginTop: "5px", color: color.secondaryColor}}>PLAYLIST</h6>
+        firstLabel = null;
+
+        const totalTime = Math.round(data.duration_ms / 1000);
+        if (totalTime > 36000)
+            return `about ${ Math.round(totalTime)} hr`;
+    
+        let hours = Math.floor(totalTime/3600);
+        let minutes = Math.floor((totalTime - hours) / 60);
+        let seconds = Math.round(totalTime - hours - minutes*60);
+
+        console.log(hours);
+
+        if (hours < 10 && hours > 0)
+            hours = "0"+hours;
+        if (minutes < 10 && minutes > 0 && hours > 0)
+            minutes = "0"+minutes;
+        if (seconds < 10)
+            seconds = "0"+seconds;
+
+        console.log({hours, minutes, seconds})
+    
+        const durationText = `${hours > 0 ? `${hours}:` : ""}${minutes > 0 ? `${minutes}:` : ""}${seconds}`;
+
+        secondLabelHeader = <p className="second-card-label">
+            <b style={{color: "var(--body-secondary-foreground-color)", fontWeight: "normal"}}>by </b>
+            {`${data.artists[0].name} • ${durationText}`}
+        </p>;
+        // typeHeader = <h6 style={{marginTop: "5px", color: color.secondaryColor}}>Track</h6>
     }
 
-    return {img, color, titleHeader, firstLabel, name, secondLabelHeader, typeHeader};
+    const type = "track";
+
+    return {img, color, titleHeader, firstLabel, name, secondLabelHeader, typeHeader, type};
 }

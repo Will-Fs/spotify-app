@@ -189,30 +189,42 @@ body {
   /* width: 50% !important; */
 }
 
-.card-object.playlist {
+.card-object.playlist, .card-object.track {
   width: 80%;
 }
-  .card-object.playlist .profile-stats {
+  .card-object.playlist .profile-stats, .card-object.track .profile-stats {
     justify-content: flex-end ;
     padding-left: 2vw;
     height: 90%;
   }
 
-  .card-object.playlist .second-card-label {
+  .card-object.playlist .second-card-label{
     font-size: 18px;
     color: var(--body-foreground-color) !important;
     margin-top: 20px;
   }
 
-  .card-object.playlist img {
+  .card-object.track .second-card-label {
+    font-size: 22px;
+    margin-top: 20px;
+    color: var(--body-foreground-color) !important;
+    padding-left: 20px;
+  }
+
+  .card-object.playlist img, .card-object.track img {
     border-radius: 0 !important;
   }
+
+  .card-object.track #name {
+    font-size: 40px;
+  }
+  
 
   .card-object.playlist #name {
     font-size: 50px;
   }
 
-  .card-object.playlist .first-card-label {
+  .card-object.playlist .first-card-label, .card-object.track .first-card-label {
     margin-top: 20px;
   }
 
@@ -361,6 +373,14 @@ body {
   margin-bottom: 30px;
   height: auto;
   width: 25%;
+}
+
+.secondary-object-info.track {
+  align-items: flex-start;
+}
+
+#lyrics {
+  width: 20%;
 }
 
 #profile-img {

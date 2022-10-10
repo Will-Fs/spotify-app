@@ -1,4 +1,4 @@
-import { api } from "../spotify";
+import { api } from "../spotifyAuth";
 
 export const calcLength = (tracks) => {
     let totalTime = 0;

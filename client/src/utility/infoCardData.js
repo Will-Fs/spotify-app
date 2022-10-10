@@ -1,5 +1,5 @@
 import {getColorData, getColorInfo} from "./colorAnalyzer";
-import {api} from "../spotify";
+import { api } from "../spotifyAuth";
 
 const getAdditionalUserInfo = async id => {
     const data = {};

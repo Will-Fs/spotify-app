@@ -1,8 +1,9 @@
 import './App.css';
 import React from 'react';
-import {api, auth_code, setCodes, getAuthorizeURL} from "./spotify"
+import {api, auth_code, setCodes, getAuthorizeURL} from "./spotifyAuth"
 import { MePage } from './components/pages/MePage';
 import { PlaylistPage } from './components/pages/PlaylistPage';
+import { TrackPage } from './components/pages/TrackPage';
 
 export const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
@@ -21,6 +22,14 @@ const PlaylistInfo = async () => {
     })
 }
 
+const TrackInfo = async () => {
+  const id = new URLSearchParams(document.location.search).get("id");
+  return TrackPage(id)
+    .then(content => {
+      return <div className="content-container">{content}</div>;
+    })
+}
+
 const displayObject = async () => {
   const path = window.location.pathname;
 
@@ -31,6 +40,8 @@ const displayObject = async () => {
       return GetMePage();
     case '/playlist':
       return PlaylistInfo();
+    case '/track':
+      return TrackInfo();
     default:
       return <h1>Page not found: {path}</h1>
   }

@@ -1,4 +1,4 @@
-import { api } from "../../spotify"
+import { api } from "../../spotifyAuth";
 import { InfoCard } from "../infoCards/InfoCard";
 import uuid from 'react-uuid';
 

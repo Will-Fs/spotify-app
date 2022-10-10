@@ -1,4 +1,4 @@
-import { api } from "../../spotify";
+import { api } from "../../spotifyAuth";
 import { InfoCard } from "../infoCards/InfoCard";
 import { getAllPlaylistTracks, calcLength } from "../../utility/getPlaylistTracks";
 import { TrackRibbon } from "../infoRibbons/TrackRibbon";

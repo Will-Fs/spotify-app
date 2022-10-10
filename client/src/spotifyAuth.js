@@ -4,7 +4,7 @@ import SpotifyWebApiServer from 'spotify-web-api-node/src/server-methods';
 import axios from 'axios';
 SpotifyWebApi._addMethods(SpotifyWebApiServer);
 
-const postLocation = `${window.location.protocol}//${window.location.hostname}:3001/`;
+export const postLocation = `${window.location.protocol}//${window.location.hostname}:3001/`;
 
 export var auth_code;
 export var refresh_token;
@@ -36,6 +36,7 @@ const getCode = () => {
 }
 
 export const setCodes = async () => {
+
   const code = getCode();
 
   let codeGrantData;
