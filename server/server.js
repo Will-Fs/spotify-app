@@ -9,10 +9,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.post('/lyrics', (req, res) => {
-
-
-
+app.post('/lyrics', (req, res) => { 
     const options = {
         apiKey: '8uwghZzwR5SQmDLo-F1zHaAe59-ZpCKUTOFjlOwUS9SIwfNNFng5s5hLBEWwinj-',
         title: req.body.title,

@@ -18,13 +18,31 @@ const RenderIt = (props) => {
     const [lyrics, setLyrics] = useState();
 
     useEffect(() => {
-        const doTheThing = async () => {
-            const res = await axios.post(postLocation + "lyrics", {title: props.title, artist: props.artist})
+        const trySetLyrics = async (params) => {
+            const res = await axios.post(postLocation + "lyrics", params)
+
             let _lyrics = res.data.lyrics ? res.data.lyrics : "Problem Getting Lyrics";
             _lyrics = _lyrics.replace(/\n/g,"<br />");
+
+
             setLyrics(_lyrics);
         }
-        doTheThing();        
+
+        const doTheThing = async () => {
+            await trySetLyrics({title: props.title, artist: props.artist});
+
+            if (!lyrics) {
+                let index = props.artist.indexOf("&");
+                if (index) {
+                    trySetLyrics({title: props.title, artist: props.artist.substring(0, index)});
+                }
+                if (!lyrics) {
+                    trySetLyrics({title: props.title, artist: props.artist.substring(index, props.artist.length - 1)});
+                }
+                
+            }
+        }
+        doTheThing();
     }, []);
 
     return (

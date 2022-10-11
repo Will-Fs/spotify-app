@@ -47,7 +47,7 @@ export const TrackRibbon = (props) => {
             <img src={image} onLoad={setImageSize} alt="Spotify Track Image"></img>
             <div className="track-title-info">
                 <h3 className={`track-ribbon-name link`}
-                    onClick={()=>{window.location = link}}>{name}</h3>
+                    onClick={()=>{window.location.href = link}}>{name}</h3>
                 <p className="track-ribbon-artist">{data.artists[0].name}</p>
             </div>
         </div>

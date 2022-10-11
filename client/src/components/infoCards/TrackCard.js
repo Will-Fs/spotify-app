@@ -48,16 +48,12 @@ export const getTrackCardData = async (props) => {
         let minutes = Math.floor((totalTime - hours) / 60);
         let seconds = Math.round(totalTime - hours - minutes*60);
 
-        console.log(hours);
-
         if (hours < 10 && hours > 0)
             hours = "0"+hours;
         if (minutes < 10 && minutes > 0 && hours > 0)
             minutes = "0"+minutes;
         if (seconds < 10)
             seconds = "0"+seconds;
-
-        console.log({hours, minutes, seconds})
     
         const durationText = `${hours > 0 ? `${hours}:` : ""}${minutes > 0 ? `${minutes}:` : ""}${seconds}`;
 
