@@ -3,6 +3,8 @@ import { InfoCard } from "../infoCards/InfoCard";
 import uuid from 'react-uuid';
 import axios from "axios";
 import { Info } from "luxon";
+import { useEffect, useState } from "react";
+import { prototype } from "spotify-web-api-node";
 
 const removeRemastered = (title) => {
     const index = title.indexOf(" - Remastered");
@@ -10,6 +12,44 @@ const removeRemastered = (title) => {
         return title.substring(0, index);
     }
     return title;
+}
+
+const RenderIt = (props) => {
+    const [lyrics, setLyrics] = useState();
+
+    useEffect(() => {
+        const doTheThing = async () => {
+            const res = await axios.post(postLocation + "lyrics", {title: props.title, artist: props.artist})
+            let _lyrics = res.data.lyrics ? res.data.lyrics : "Problem Getting Lyrics";
+            _lyrics = _lyrics.replace(/\n/g,"<br />");
+            setLyrics(_lyrics);
+        }
+        doTheThing();        
+    }, []);
+
+    return (
+        <div className="object-info">
+            <div className="object-info-container">
+                <InfoCard type="track" object={true} id={props.id}></InfoCard>
+                <div className="object-bottom-container">
+                    <div className="object-bottom-info">
+                        {/* <h3>{data.owner.display_name}</h3> */}
+                    </div>
+                </div>
+            </div>
+            <div className="secondary-object-info track">
+                <h1 align="left" style={{width: "90%", paddingLeft: "5%", marginBottom: "30px"}}>
+                    Lyrics <small style={{fontSize: "16px"}}>
+                        from <a href="https://genius.com/" style={{textDecoration: "underline"}} target="new" title="Opens in a new tab">Genius</a>
+                    </small>
+                </h1>
+                <p id="lyrics" style={{color: "var(--body-secondary-foreground-color)", fontWeight: "600", fontSize: "20px"}} 
+                    dangerouslySetInnerHTML={{__html: lyrics ?? "loading..."}} 
+                />
+                <InfoCard type="artist" id={props.artistId} style={{background: "none"}}></InfoCard>
+            </div>
+        </div>
+        )
 }
 
 
@@ -20,35 +60,7 @@ export const TrackPage = async id => {
     const artist = data.artists[0].name;
     const title = removeRemastered(data.name);
 
-    return axios.post(postLocation + "lyrics", {title, artist}).then(
-        res => {
-            const lyrics = res.data.lyrics ? res.data.lyrics : "Problem Getting Lyrics";
-            return lyrics.replace(/\n/g,"<br />");
-            
-        }
-    ).then (lyrics => {
-        return (
-        <div className="object-info">
-            <div className="object-info-container">
-                <InfoCard type="track" object={true} id={id}></InfoCard>
-                <div className="object-bottom-container">
-                    <div className="object-bottom-info">
-                        {/* <h3>{data.owner.display_name}</h3> */}
-                    </div>
-                </div>
-            </div>
-            <div className="secondary-object-info track">
-                <h1 align="left" style={{width: "90%", paddingLeft: "15%", marginBottom: "30px"}}>
-                    Lyrics <small style={{fontSize: "16px"}}>
-                        from <a href="https://genius.com/" style={{textDecoration: "underline"}} target="new" title="Opens in a new">Genius</a>
-                    </small>
-                </h1>
-                <p id="lyrics" style={{color: "var(--body-secondary-foreground-color)", fontWeight: "600", fontSize: "20px"}} dangerouslySetInnerHTML={{__html: lyrics}} />
-                <InfoCard type="artist" id={data.artists[0].id} style={{background: "none"}}></InfoCard>
-            </div>
-        </div>
-        )
-    })
+    return <RenderIt artistId={data.artists[0].id} id={id} artist={artist} title={title} />
 
     
 }

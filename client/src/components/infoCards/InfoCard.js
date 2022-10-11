@@ -17,7 +17,10 @@ export const InfoCardRender = (data) => {
     return (
         <div className={`card-large ${data.object === true ? `card-object ${data.type ?? ""}` : ""}`} style={{backgroundImage: bgImage}}>
             {data.titleHeader ?? null}
-            <img onLoad={setImageSize} id='profile-img' src={data.img} alt={`Spotify Info Card`}></img>
+            <img onLoad={setImageSize} id='profile-img' src={data.img} alt={`Spotify Info Card`} 
+                className={data.link ? "link" : null}
+                onClick={data.link ?  ()=>{window.location = data.link} : null} 
+            />
             <div className="profile-stats">
                 {data.name ? 
                     <h1 id='name' className={data.link ? "link" : null}

@@ -33,6 +33,7 @@ const getTimeStuff = (rawDate, rawDuration) => {
 
 export const TrackRibbon = (props) => {
     const data = props.trackData.track;
+    let link = `${window.location.origin}/track?id=${data.id}`;
         
     const image = data.album.images[0].url;
     const name = data.name;
@@ -45,7 +46,8 @@ export const TrackRibbon = (props) => {
         <div className="track-title-info-container">
             <img src={image} onLoad={setImageSize} alt="Spotify Track Image"></img>
             <div className="track-title-info">
-                <h3 className="track-ribbon-name">{name}</h3>
+                <h3 className={`track-ribbon-name link`}
+                    onClick={()=>{window.location = link}}>{name}</h3>
                 <p className="track-ribbon-artist">{data.artists[0].name}</p>
             </div>
         </div>

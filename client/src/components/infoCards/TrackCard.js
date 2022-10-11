@@ -2,6 +2,7 @@ import { getCardData } from "../../utility/infoCardData";
 
 export const getTrackCardData = async (props) => {
     const d = await getCardData("track", props.id);
+    let link = `${window.location.origin}/track?id=${props.id}`;
 
     const data = d.data;
     const additionalData = d.additionalData;
@@ -34,6 +35,7 @@ export const getTrackCardData = async (props) => {
 
     let typeHeader;
     if (props.object === true) {
+        link = null;
         const root = document.documentElement;
         root.style.setProperty("--object-info-bg-color", color.bgTopColor);
         firstLabel = null;
@@ -68,5 +70,5 @@ export const getTrackCardData = async (props) => {
 
     const type = "track";
 
-    return {img, color, titleHeader, firstLabel, name, secondLabelHeader, typeHeader, type};
+    return {img, color, titleHeader, firstLabel, name, secondLabelHeader, typeHeader, type, link};
 }
