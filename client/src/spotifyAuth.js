@@ -97,12 +97,21 @@ export const setCodes = async () => {
 
 export const getAuthorizeURL = () => {
 
-    const scopes = ['playlist-read-private', 'playlist-modify-private', 'playlist-modify-public', 'user-top-read', 'user-library-read', 'user-follow-read'];
+    const scopes = [
+      'playlist-read-private', 
+      'playlist-modify-private', 
+      'playlist-modify-public', 
+      'user-top-read', 
+      'user-library-read', 
+      'user-follow-read',
+      'user-read-playback-state',
+      'user-modify-playback-state'
+    ];
     const state = 'spotify-web-app';
     const authorize_url = api.createAuthorizeURL(
       scopes,
       state,
-      false,
+      true,
       'code'
     );
 

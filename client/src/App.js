@@ -4,6 +4,8 @@ import {api, auth_code, setCodes, getAuthorizeURL} from "./spotifyAuth"
 import { MePage } from './components/pages/MePage';
 import { PlaylistPage } from './components/pages/PlaylistPage';
 import { TrackPage } from './components/pages/TrackPage';
+import { getActiveDevice, getDevices, setActiveDevice } from './utility/playback/devices';
+import { addTrackToQueue, playTrack, volumeTest } from './utility/playback/setPlayback';
 
 export const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
@@ -47,6 +49,14 @@ const displayObject = async () => {
   }
 }
 
+const runTests = async () => {
+  // getDevices();
+  // getActiveDevice();
+  // await setActiveDevice("c04d0e7707c6c9e6fa842445236691ae2ff7517b");
+  await playTrack('1tdltVUBkiBCW1C3yB4zyD');
+  // addTrackToQueue('3Am0IbOxmvlSXro7N5iSfZ');
+}
+
 const GetApp = async (root) => {
   root.render(
     <React.StrictMode>
@@ -76,6 +86,7 @@ const GetApp = async (root) => {
       )
     }
     else {
+      runTests();
       root.render(
         <React.StrictMode>
           <div className='temp-container'>

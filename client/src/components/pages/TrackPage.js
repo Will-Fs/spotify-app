@@ -1,7 +1,6 @@
 import { api } from "../../spotifyAuth";
 import { InfoCard } from "../infoCards/InfoCard";
 import { useEffect, useState } from "react";
-import { getTrackAnalysisRaw, getTrackFeaturesRaw } from "../../utility/trackInfo/trackAnalysis";
 import { getLyrics } from "../../utility/trackInfo/getLyrics";
 
 const removeRemastered = (title) => {
@@ -56,9 +55,6 @@ export const TrackPage = async id => {
 
     const artist = data.artists[0].name;
     const title = removeRemastered(data.name);
-
-    const trackFeatures = await getTrackFeaturesRaw(id);
-    await getTrackAnalysisRaw(id);
 
     return <RenderIt artistId={data.artists[0].id} id={id} artist={artist} title={title} />
 
