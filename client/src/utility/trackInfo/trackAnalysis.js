@@ -1,4 +1,4 @@
-import { api } from "../spotifyAuth";
+import { api } from "../../spotifyAuth";
 
 export const getTrackFeaturesRaw = async id => {
     const d = await api.getAudioFeaturesForTrack(id);

@@ -1,8 +1,8 @@
 import { api } from "../../spotifyAuth";
 import { InfoCard } from "../infoCards/InfoCard";
 import { useEffect, useState } from "react";
-import { getTrackAnalysisRaw, getTrackFeaturesRaw } from "../../utility/trackAnalysis";
-import { getLyrics } from "../../utility/lyrics/getLyrics";
+import { getTrackAnalysisRaw, getTrackFeaturesRaw } from "../../utility/trackInfo/trackAnalysis";
+import { getLyrics } from "../../utility/trackInfo/getLyrics";
 
 const removeRemastered = (title) => {
     const index = title.indexOf(" - Remastered");
