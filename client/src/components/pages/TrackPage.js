@@ -1,8 +1,8 @@
-import { api, postLocation } from "../../spotifyAuth";
+import { api } from "../../spotifyAuth";
 import { InfoCard } from "../infoCards/InfoCard";
-import axios from "axios";
-import { Info } from "luxon";
 import { useEffect, useState } from "react";
+import { getTrackAnalysisRaw, getTrackFeaturesRaw } from "../../utility/trackAnalysis";
+import { getLyrics } from "../../utility/lyrics/getLyrics";
 
 const removeRemastered = (title) => {
     const index = title.indexOf(" - Remastered");
@@ -16,30 +16,11 @@ const RenderIt = (props) => {
     const [lyrics, setLyrics] = useState();
 
     useEffect(() => {
-        const trySetLyrics = async (params) => {
-            const res = await axios.post(postLocation + "lyrics", params)
-
-            let _lyrics = res.data.lyrics ? res.data.lyrics : "Problem Getting Lyrics";
-            _lyrics = _lyrics.replace(/\n/g,"<br />");
-
+        const doSetLyrics = async () => {
+            const _lyrics = await getLyrics(props.title, props.artist);
             setLyrics(_lyrics);
         }
-
-        const doTheThing = async () => {
-            await trySetLyrics({title: props.title, artist: props.artist});
-
-            if (!lyrics) {
-                let index = props.artist.indexOf("&");
-                if (index != -1) {
-                    trySetLyrics({title: props.title, artist: props.artist.substring(0, index)});
-                }
-                if (!lyrics != -1) {
-                    trySetLyrics({title: props.title, artist: props.artist.substring(index, props.artist.length - 1)});
-                }
-                
-            }
-        }
-        doTheThing();
+        doSetLyrics();
     }, []);
 
     return (
@@ -69,11 +50,15 @@ const RenderIt = (props) => {
 
 
 export const TrackPage = async id => {
+    const _tf = await api.getAudioFeaturesForTrack(id);
     const d = await api.getTrack(id);
     const data = d.body;
 
     const artist = data.artists[0].name;
     const title = removeRemastered(data.name);
+
+    const trackFeatures = await getTrackFeaturesRaw(id);
+    await getTrackAnalysisRaw(id);
 
     return <RenderIt artistId={data.artists[0].id} id={id} artist={artist} title={title} />
 
