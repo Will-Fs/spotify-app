@@ -59,7 +59,7 @@ export const getTrackCardData = async (props) => {
 
         secondLabelHeader = <p className="second-card-label">
             <b style={{color: "var(--body-secondary-foreground-color)", fontWeight: "normal"}}>by </b>
-            {`${data.artists[0].name} • ${durationText}`}
+            {`${data.artists[0].name} • ${data.album.release_date.substring(0, 4)} • ${durationText}`}
         </p>;
         // typeHeader = <h6 style={{marginTop: "5px", color: color.secondaryColor}}>Track</h6>
     }
