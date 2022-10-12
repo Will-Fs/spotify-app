@@ -1,10 +1,8 @@
 import { api, postLocation } from "../../spotifyAuth";
 import { InfoCard } from "../infoCards/InfoCard";
-import uuid from 'react-uuid';
 import axios from "axios";
 import { Info } from "luxon";
 import { useEffect, useState } from "react";
-import { prototype } from "spotify-web-api-node";
 
 const removeRemastered = (title) => {
     const index = title.indexOf(" - Remastered");
@@ -24,7 +22,6 @@ const RenderIt = (props) => {
             let _lyrics = res.data.lyrics ? res.data.lyrics : "Problem Getting Lyrics";
             _lyrics = _lyrics.replace(/\n/g,"<br />");
 
-
             setLyrics(_lyrics);
         }
 
@@ -33,10 +30,10 @@ const RenderIt = (props) => {
 
             if (!lyrics) {
                 let index = props.artist.indexOf("&");
-                if (index) {
+                if (index != -1) {
                     trySetLyrics({title: props.title, artist: props.artist.substring(0, index)});
                 }
-                if (!lyrics) {
+                if (!lyrics != -1) {
                     trySetLyrics({title: props.title, artist: props.artist.substring(index, props.artist.length - 1)});
                 }
                 
