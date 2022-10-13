@@ -7,18 +7,17 @@ export const getLyrics = async (title, artist) => {
         const res = await axios.post(postLocation + "lyrics", params)
 
         let _lyrics = res.data.lyrics ?? null;
-        console.log(`lines: ${_lyrics.replace(/[^\n]/g, "").length}`)
-        lyrics = _lyrics.replace(/\n/g,"<br />");
+        lyrics = _lyrics ? _lyrics.replace(/\n/g,"<br />") : null;
     }
 
     await _getLyrics({title, artist});
     if (!lyrics) {
         let index = artist.indexOf("&");
         if (index != -1) {
-            trySetLyrics({title: title, artist: artist.substring(0, index)});
+            await _getLyrics({title: title, artist: artist.substring(0, index)});
         }
-        if (!lyrics != -1) {
-            trySetLyrics({title: title, artist: artist.substring(index, artist.length - 1)});
+        if (!lyrics && index != -1) {
+            await _getLyrics({title: title, artist: artist.substring(index, artist.length - 1)});
         }
     }
 
