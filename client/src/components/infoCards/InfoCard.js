@@ -28,7 +28,12 @@ export const InfoCardRender = (data) => {
                 {data.name ? 
                     <h1 id='name' className={data.link ? "link" : null}
                     onClick={data.link ?  ()=>{window.location = data.link} : null} 
-                    style={{ color: data.color.foregroundColor}}
+                    style={{ 
+                        color: data.color.foregroundColor, 
+                        width: data.object !== true ? "100%": null, 
+                        whiteSpace: data.object !== true ? "nowrap" : null,
+                        overflow: data.object !== true ? "hidden": null
+                    }}
                     dangerouslySetInnerHTML={{__html: data.name}}>
                     </h1>
                     : null}

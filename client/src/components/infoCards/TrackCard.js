@@ -1,3 +1,4 @@
+import { findLargestImage } from "../../utility/findLargestImage";
 import { getCardData } from "../../utility/infoCardData";
 
 export const getTrackCardData = async (props) => {
@@ -24,7 +25,7 @@ export const getTrackCardData = async (props) => {
         }
     }
 
-    const img = data.album.images[0].url
+    const img = findLargestImage(data.album.images);
 
     const color = additionalData.colorData;
 

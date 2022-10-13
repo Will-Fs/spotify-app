@@ -207,6 +207,11 @@ body {
   /* width: 50% !important; */
 }
 
+.profile-stats #name {
+  text-overflow: ellipsis;
+    /* width: 100%; */
+}
+
 .card-object.playlist, .card-object.track {
   width: 80%;
 }

@@ -1,4 +1,5 @@
 import { getCardData } from "../../utility/infoCardData"
+import { findLargestImage } from "../../utility/findLargestImage";
 
 const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
@@ -8,7 +9,7 @@ export const getPlaylistCardData = async props => {
     const additionalData = d.additionalData;
 
     let name = data.name;
-    const img = data.images[0].url;
+    const img = findLargestImage(data.images);
 
     const needsOwner = props.needsOwner === true;
 

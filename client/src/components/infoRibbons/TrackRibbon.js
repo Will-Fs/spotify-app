@@ -1,5 +1,6 @@
 import { get } from "spotify-web-api-node/src/http-manager";
 import { setImageSize } from "../../imageSize";
+import { findLargestImage } from "../../utility/findLargestImage";
 const {DateTime} = require('luxon');
 
 const getTimeStuff = (rawDate, rawDuration) => {
@@ -35,7 +36,7 @@ export const TrackRibbon = (props) => {
     const data = props.trackData.track;
     let link = `${window.location.origin}/track?id=${data.id}`;
         
-    const image = data.album.images[0].url;
+    const img = findLargestImage(data.album.images);
     const name = data.name;
 
     const {dateAddedtext, durationText} = getTimeStuff(props.trackData.added_at, data.duration_ms);
@@ -44,7 +45,7 @@ export const TrackRibbon = (props) => {
     <div className="track-ribbon">
         <p className="track-number">{props.trackNumber}</p>
         <div className="track-title-info-container">
-            <img src={image} onLoad={setImageSize} alt="Spotify Track Image"></img>
+            <img src={img} onLoad={setImageSize} alt="Spotify Track Image"></img>
             <div className="track-title-info">
                 <h3 className={`track-ribbon-name link`}
                     onClick={()=>{window.location.href = link}}>{name}</h3>

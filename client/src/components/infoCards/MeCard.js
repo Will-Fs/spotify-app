@@ -1,3 +1,4 @@
+import { findLargestImage } from "../../utility/findLargestImage";
 import { getCardData } from "../../utility/infoCardData";
 
 const formatter = Intl.NumberFormat("en", { notation: 'compact' });
@@ -10,7 +11,7 @@ export const getMeCardData = async (props) => {
     const firstLabel = `${formatter.format(data.followers.total)} Follower${data.followers.total>1?"s":""}\
      • ${additionalData.playlistData.numPublicPlaylists} Public Playlist${additionalData.playlistData.numPublicPlaylists>1?"s":""}`;
 
-    const img = data.images[0].url;
+    const img = findLargestImage(data.images);
 
     const color = additionalData.colorData;
     color.foregroundColor = "var(--body-foreground-color)";

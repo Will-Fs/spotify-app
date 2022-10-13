@@ -1,4 +1,5 @@
 import { getCardData } from "../../utility/infoCardData";
+import { findLargestImage } from "../../utility/findLargestImage";
 
 const formatter = Intl.NumberFormat("en", { notation: 'compact' });
 
@@ -25,7 +26,7 @@ export const getArtistCardData = async props => {
         }
     }
 
-    const img = data.images[0].url;
+    const img = findLargestImage(data.images);
 
     const color = additionalData.colorData;
 
