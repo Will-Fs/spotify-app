@@ -20,5 +20,5 @@ export const getMeCardData = async (props) => {
     const root = document.documentElement;
     root.style.setProperty("--object-info-bg-color", color.bgTopColor);
 
-    return {img, color, firstLabel, name}
+    return {img, color, firstLabel, name, type: "me"}
 }

@@ -2,6 +2,11 @@
   --body-bg-dark: rgb(22, 20, 24);
   --body-bg-light: rgb(255, 253, 254);
   --body-bg-color: var(--body-bg-dark);
+  
+  --body-bg-dark-value: 22, 20, 24;
+  --body-bg-light-value: 255, 253, 254;
+  --body-bg-color-value: var(--body-bg-dark-value);
+
 
   --body-secondary-bg-dark: rgb(33, 30, 36);
   --body-secondary-bg-light: rgb(244, 245, 243);
@@ -103,9 +108,20 @@ body {
   width: 100%;
   height: calc(50vh - 15px);
   max-height: 500px;
-  background-image: linear-gradient(to top, var(--body-bg-color), var(--object-info-bg-color));
   padding-top: 30px;
+  /* background-color: var(--object-info-bg-color); */
+}
 
+.object-bottom-container :after {
+  background-image: linear-gradient(to top, var(--body-bg-color), var(--object-info-bg-color));
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 .object-info {
@@ -154,6 +170,8 @@ body {
   align-items: center;
   flex-wrap: wrap;
   flex-direction: row;
+  background-color: rgba(var(--body-bg-color-value), 0.3);
+  padding-top: 20px;
 }
 
 .card-object {
@@ -259,6 +277,68 @@ body {
   padding-left: calc(10% + 320px);
 }
 
+.color-swatches {
+  width: 120px;
+  height: 20px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+  
+
+  .color-swatch {
+    width: 15px;
+    height: 15px;
+    outline: 1px solid var(--body-foreground-color);
+    cursor: pointer;
+  }
+
+  .color-swatch:hover {
+    outline-width: 2px;
+  }
+
+  .color-swatch:hover .color-swatch-info {
+    display: block;
+  }
+
+  .color-swatch:hover .color-swatch-filler {
+    display: block;
+    display: block;
+  }
+
+  .color-swatch-filler {
+    background: transparent;
+    height: 5px;
+    width: 120px;
+    position: relative;
+    top: 16px;
+    left: -67.5px;
+    display: none;
+  }
+
+  .color-swatch-info {
+    width: 120px;
+    height: 150px;
+    background-color: var(--body-secondary-bg-color);
+    display: none;
+    z-index: 1000;
+    position: relative;
+    top: 16px;
+    left: -67.5px;
+    box-shadow: 0 0 3px 1px var(--info-card-shadow-color);
+    cursor: default;
+    text-align: left;
+    padding: 5px;
+  }
+
+  .color-swatch-info p {
+    font-size: 14px;
+    line-height: 30px;
+  }
+
 .additional-object-info {
   display: flex;
   flex-direction: column;
@@ -290,11 +370,12 @@ body {
   padding-bottom: 10px;
   margin-left: 5%;
   padding-left: 5%;
-  background-color: var(--body-bg-color);
   padding-top: 5px;
+  background-color: none;
 }
 
 .tracks-header {
+  transition: 0.5s;
   border-bottom-width: 3px;
   position: sticky;
   top: 0;

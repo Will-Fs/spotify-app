@@ -4,6 +4,8 @@ import {getArtistCardData} from "./ArtistCard"
 import { getTrackCardData } from './TrackCard';
 import { getMeCardData } from './MeCard';
 import { getPlaylistCardData } from './PlaylistCard';
+import uuid from 'react-uuid';
+import { ColorSwatch } from '../ColorSwatch';
 
 export const cardBackground = (bottomColor, topColor) => {
     // return 'none'
@@ -20,6 +22,7 @@ export const InfoCardRender = (data) => {
             <img onLoad={setImageSize} id='profile-img' src={data.img} alt={`Spotify Info Card`} 
                 className={data.link ? "link" : null}
                 onClick={data.link ?  ()=>{window.location = data.link} : null} 
+                style={{boxShadow: data.type !== "me" && data.object === true ? "0 0 2px 0px var(--body-secondary-foreground-color)" : null}}
             />
             <div className="profile-stats">
                 {data.name ? 
@@ -34,6 +37,13 @@ export const InfoCardRender = (data) => {
                     : null}
             {data.secondLabelHeader ?? null}
             {data.typeHeader ?? null}
+            {data.titleHeader || data.type === "me" ? null : 
+                <div className="color-swatches">
+                    {data.color.allColors.map(color => <ColorSwatch colorData={color} key={uuid()}/>)}
+                </div>
+            }
+            
+
             </div>
         </div>
     )

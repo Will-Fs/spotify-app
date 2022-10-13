@@ -47,7 +47,7 @@ export const MePage = async () => {
             let j = 0;
             const content = (
             <div className="object-info">
-              <div className="object-info-container">
+              <div className="object-info-container"  style={{backgroundImage: 'linear-gradient(to top, var(--body-bg-color), var(--object-info-bg-color))'}}>
                 <InfoCard type="me" object={true}></InfoCard>
               </div>
               <div className="secondary-object-info">

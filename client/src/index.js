@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import GetApp from './App';
 import {setImageSize} from "./imageSize";
+import { scrollStyles } from './scrollStyles';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,3 +22,5 @@ GetApp(root).then( content => {
 .then(() => {
   setImageSize();
 })
+
+document.onscroll = scrollStyles;

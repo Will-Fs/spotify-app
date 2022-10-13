@@ -53,7 +53,7 @@ const runTests = async () => {
   // getDevices();
   // getActiveDevice();
   // await setActiveDevice("c04d0e7707c6c9e6fa842445236691ae2ff7517b");
-  await playTrack('1tdltVUBkiBCW1C3yB4zyD');
+  // await playTrack('1tdltVUBkiBCW1C3yB4zyD');
   // addTrackToQueue('3Am0IbOxmvlSXro7N5iSfZ');
 }
 
