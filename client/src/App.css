@@ -372,17 +372,29 @@ body {
   grid-template-columns: 4% 40% 25% 15% 10%;
   align-items: center;
   border-bottom: 1px solid var(--info-card-shadow-color);
-  padding-bottom: 10px;
   margin-left: 5%;
   padding-left: 5%;
-  padding-top: 5px;
   background-color: none;
   transition: backdrop-filter 200ms;
+}
+
+.track-ribbon {
+  padding-left: 0;
+  margin-left: 0;
+  width: 100%;
+  grid-template-columns: 6.5% 4% 40% 25% 17% 5%;
 }
 
 
 .track-ribbon:hover {
   backdrop-filter: brightness(135%);
+}
+
+.tracks-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .tracks-header {
@@ -402,7 +414,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 100%;
+  height: calc(65%);
 }
 
   .track-title-info  {

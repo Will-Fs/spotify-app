@@ -3,6 +3,7 @@ import { InfoCard } from "../infoCards/InfoCard";
 import { getAllPlaylistTracks, calcLength } from "../../utility/getPlaylistTracks";
 import { TrackRibbon } from "../infoRibbons/TrackRibbon";
 import uuid from 'react-uuid';
+import { FixedSizeList as List } from "react-window";
 
 export const PlaylistPage = async id => {
     let tracks = [];
@@ -13,8 +14,6 @@ export const PlaylistPage = async id => {
     const allTracks = await getAllPlaylistTracks(id);
     const playlistLength = calcLength(allTracks);
     
-    let i = 0;
-
     return (
         <div className="object-info">
         <div className="object-info-container">
@@ -35,10 +34,23 @@ export const PlaylistPage = async id => {
             <p>DURATION</p>
 
           </div>
-          {allTracks.map((track) => {
+          <div className="tracks-container">
+            <List
+              itemCount={allTracks.length}
+              itemSize={120}
+              width={1}
+              height={10000}
+              itemData={{tracks: allTracks, key:uuid()}}
+              style={{width: "calc(80%)", height: "60vh"}}
+            >
+              {TrackRibbon}
+            </List>
+          </div>
+          
+          {/* {allTracks.map((track) => {
             i++;
             return <TrackRibbon trackData={allTracks[i-1]} trackNumber={i} key={uuid()}/>;
-          })}
+          })} */}
         </div>
         <div className="additional-object-info">
         </div>
