@@ -20,19 +20,30 @@ export const calcLength = (tracks) => {
 
 export const getAllPlaylistTracks = async (id) => {
     let allTracks = [];
-
-    const getTracks = async offset => {
-        const d = await api.getPlaylistTracks(id, {limit: 100, offset: offset});
-        const data = d.body
-        allTracks.push(...data.items);
-
-        if (data.next) {
-            await getTracks(offset + 100);
-        }
+    const numTracks = (await api.getPlaylistTracks(id, {limit: 1})).body.total;
+    const numBatches = Math.ceil(numTracks / 100);
+    
+    const promises = [];
+    for (let i = 0; i < numBatches; i++) {
+        promises.push(api.getPlaylistTracks(id, {limit: 100, offset: i*100}));
     }
+
+    const batches = await Promise.allSettled(promises);
+
+    batches.forEach(batch => {
+        allTracks.push(...batch.value.body.items);
+    })
+    // const getTracks = async offset => {
+    //     const d = await 
+    //     const data = d.body
+    //     allTracks.push(...data.items);
+
+    //     if (data.next) {
+    //         await getTracks(offset + 100);
+    //     }
+    // }
 
 
     const d = await api.getPlaylistTracks(id);
-    await getTracks(0);
     return allTracks;
 }

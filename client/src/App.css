@@ -177,6 +177,7 @@ body {
 .card-object {
   box-shadow: none;
   width: calc(40% - 10px);
+  min-width: 600px;
   height: 80%;
   width: 50%;
   max-width: none;
@@ -243,6 +244,7 @@ body {
     height: 50%;
     width: 100%;
     text-align: left;
+    min-width: 300px;
   }
 
   .card-object.playlist .first-card-label, .card-object.track .first-card-label {
@@ -365,6 +367,7 @@ body {
 
 .track-ribbon, .tracks-header {
   width: 80%;
+  min-width: 600px;
   display: grid;
   grid-template-columns: 4% 40% 25% 15% 10%;
   align-items: center;
