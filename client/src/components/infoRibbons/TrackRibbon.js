@@ -34,9 +34,11 @@ const getTimeStuff = (rawDate, rawDuration) => {
 
 export const TrackRibbon = (props) => {
     const data = props.trackData.track;
+    if (!data)
+        return null;
     let link = `${window.location.origin}/track?id=${data.id}`;
         
-    const img = findLargestImage(data.album.images);
+    const img = data.album.images ? findLargestImage(data.album.images) : null;
     const name = data.name;
 
     const {dateAddedtext, durationText} = getTimeStuff(props.trackData.added_at, data.duration_ms);

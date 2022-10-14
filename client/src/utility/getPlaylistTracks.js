@@ -2,8 +2,10 @@ import { api } from "../spotifyAuth";
 
 export const calcLength = (tracks) => {
     let totalTime = 0;
+
     tracks.forEach(track => {
-        totalTime += track.track.duration_ms;
+        if (track.track)
+            totalTime += track.track.duration_ms;
     })
     
     totalTime = Math.round(totalTime / 1000) / 3600;

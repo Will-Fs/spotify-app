@@ -69,7 +69,7 @@ export const getColorInfo = color => {
         bgColorMult: bgColorMult,
         topColor: usePageColors ? "var(--body-secondary-bg-color)" : `rgba(${bestColor.map(color => color * (1 + bgColorMult * 2)).join(", ")}, ${opacity})`,
         bottomColor: usePageColors ? "var(--body-secondary-bg-color)" : `rgba(${bestColor.map(color => color * (1)).join(", ")},  ${opacity})`,
-        bgTopColor: `rgb(${bestColor.map(color => (avgColor > 180 ? color * 180/avgColor : color)).join(", ")})`,
+        bgTopColor: `rgb(${bestColor.map(color => (avgColor > 140 ? color * 120/avgColor : color)).join(", ")})`,
         allColors
           //`rgb(${color.map(color => (color * 130/avgColor) ** 1.1).join(", ")})`
       }

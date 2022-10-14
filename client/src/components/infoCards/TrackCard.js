@@ -25,7 +25,7 @@ export const getTrackCardData = async (props) => {
         }
     }
 
-    const img = findLargestImage(data.album.images);
+    const img = data.album ? findLargestImage(data.album.images) : null;
 
     const color = additionalData.colorData;
 

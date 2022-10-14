@@ -1,6 +1,6 @@
 export const findLargestImage = (images) => {
     if (images.length === 1) return images[0].url;
-    
+
     let largestImage = {image: null, size: 0};
 
     images.forEach(image => {
@@ -10,5 +10,5 @@ export const findLargestImage = (images) => {
         }
     })
 
-    return largestImage.image.url;
+    return largestImage.image?.url;
 }

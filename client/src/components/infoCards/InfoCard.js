@@ -22,7 +22,7 @@ export const InfoCardRender = (data) => {
             <img onLoad={setImageSize} id='profile-img' src={data.img} alt={`Spotify Info Card`} 
                 className={data.link ? "link" : null}
                 onClick={data.link ?  ()=>{window.location = data.link} : null} 
-                style={{boxShadow: data.type !== "me" && data.object === true ? "0 0 2px 0px var(--body-secondary-foreground-color)" : null}}
+                style={{boxShadow: data.type !== "me" && data.object === true ? "0 0 10vw 0px rgba(var(--body-bg-color-value), 0.5)" : null}}
             />
             <div className="profile-stats">
                 {data.name ? 
