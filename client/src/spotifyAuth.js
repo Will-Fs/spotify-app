@@ -111,7 +111,7 @@ export const getAuthorizeURL = () => {
     const authorize_url = api.createAuthorizeURL(
       scopes,
       state,
-      true,
+      false,
       'code'
     );
 

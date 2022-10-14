@@ -15,6 +15,12 @@ export const cardBackground = (bottomColor, topColor) => {
 export const InfoCardRender = (data) => {
     data = data.data;
 
+    useEffect(() => {
+        const title = $("#name-main");
+        $("#name-main").fitText(2.5, {minFontSize: "25px", maxFontSize: "50px"});
+
+    }, []);
+
     const bgImage = data.object !== true ? cardBackground(data.color.bottomColor, data.color.topColor) : null
     return (
         <div className={`card-large ${data.object === true ? `card-object ${data.type ?? ""}` : ""}`} style={{backgroundImage: bgImage}}>
@@ -26,7 +32,7 @@ export const InfoCardRender = (data) => {
             />
             <div className="profile-stats">
                 {data.name ? 
-                    <h1 id='name' className={data.link ? "link" : null}
+                    <h1 id={`name${data.object === true ? "-main" : ""}`} className={data.link ? "link" : null}
                     onClick={data.link ?  ()=>{window.location = data.link} : null} 
                     style={{ 
                         color: data.color.foregroundColor, 
@@ -34,7 +40,8 @@ export const InfoCardRender = (data) => {
                         whiteSpace: data.object !== true ? "nowrap" : null,
                         overflow: data.object !== true ? "hidden": null
                     }}
-                    dangerouslySetInnerHTML={{__html: data.name}}>
+                    dangerouslySetInnerHTML={{__html: data.name}}
+                    >
                     </h1>
                     : null}
                 {data.firstLabel ? 

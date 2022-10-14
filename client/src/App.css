@@ -238,13 +238,11 @@ body {
     border-radius: 0 !important;
   }
 
-  .card-object.track #name {
-    font-size: 40px;
-  }
-  
-
-  .card-object.playlist #name {
-    font-size: 50px;
+  .card-object.track #name-main, .card-object.playlist #name-main {
+    /* font-size: 50px; */
+    height: 50%;
+    width: 100%;
+    text-align: left;
   }
 
   .card-object.playlist .first-card-label, .card-object.track .first-card-label {
