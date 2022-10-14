@@ -298,7 +298,6 @@ body {
     width: 15px;
     height: 15px;
     outline: 1px solid var(--body-foreground-color);
-    cursor: pointer;
   }
 
   .color-swatch:hover {
@@ -377,6 +376,12 @@ body {
   padding-left: 5%;
   padding-top: 5px;
   background-color: none;
+  transition: backdrop-filter 200ms;
+}
+
+
+.track-ribbon:hover {
+  backdrop-filter: brightness(135%);
 }
 
 .tracks-header {

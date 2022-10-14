@@ -14,6 +14,9 @@ const dHueMult = 1;
 const dSatMult = 0.7;
 const dLightMult = 0.4;
 
+const satNum = 0.75;
+const lightNum = 110;
+
 const getBestColor = colors => {
   
   
@@ -51,7 +54,13 @@ const getBestColor = colors => {
     color.distance /= maxDistance;
   })
 
-  return {bestColor: bestColor.color.getRgb(), allColors};
+  const sat = bestColor.color.getHsl()[1];
+  const mult = (satNum-sat)/sat ;
+  let c = new Color(bestColor.color.getRgb());
+
+  // c = c.saturate(mult);
+
+  return {bestColor: c.rgb().color, allColors};
 }
 
 export const getColorInfo = color => {
@@ -69,7 +78,7 @@ export const getColorInfo = color => {
         bgColorMult: bgColorMult,
         topColor: usePageColors ? "var(--body-secondary-bg-color)" : `rgba(${bestColor.map(color => color * (1 + bgColorMult * 2)).join(", ")}, ${opacity})`,
         bottomColor: usePageColors ? "var(--body-secondary-bg-color)" : `rgba(${bestColor.map(color => color * (1)).join(", ")},  ${opacity})`,
-        bgTopColor: `rgb(${bestColor.map(color => (avgColor > 140 ? color * 120/avgColor : color)).join(", ")})`,
+        bgTopColor: `rgb(${bestColor.map(color => (avgColor > lightNum ? color * lightNum/avgColor : color)).join(", ")})`,
         allColors
           //`rgb(${color.map(color => (color * 130/avgColor) ** 1.1).join(", ")})`
       }
