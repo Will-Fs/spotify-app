@@ -9,8 +9,23 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: overlay;
 }
 
-h2 {
-  /* font-weight: 600; */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(var(--body-bg-color-value), 0.2);
+}
+
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border: 8px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 45px;
+  background-color: var(--body-secondary-foreground-color)
 }

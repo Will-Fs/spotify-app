@@ -47,8 +47,13 @@ export const MePage = async () => {
             let j = 0;
             const content = (
             <div className="object-info">
-              <div className="object-info-container"  style={{backgroundImage: 'linear-gradient(to top, var(--body-bg-color), var(--object-info-bg-color))'}}>
+              <div className="object-info-container">
                 <InfoCard type="me" object={true}></InfoCard>
+                <div className="object-bottom-container">
+                    <div className="object-bottom-info">
+                        {/* <h3>{data.owner.display_name}</h3> */}
+                    </div>
+                </div>
               </div>
               <div className="secondary-object-info">
                 <h1 align="left" style={{width: "90%"}}>Quick Stats</h1>

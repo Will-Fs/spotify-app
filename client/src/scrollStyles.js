@@ -1,17 +1,13 @@
 export const scrollStyles = () => {
-    const objectContainer = document.querySelector(".object-info-container");
-    // console.log(objectContainer.style.height)
-    const tracksHeader = document.querySelector(".tracks-header");
-    if (tracksHeader) {
-        if (window.scrollY > objectContainer.clientHeight + 70) {
-            tracksHeader.style = "\
-                background-color: rgba(var(--body-bg-color-value), 0.8);\
-                backdrop-filter: blur(3px);"
-        }
-        else {
-            tracksHeader.style = "none";
-        }
-    }
+   const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+   const navbar = document.querySelector("nav");
+   console.log(window.scrollY)
+   const ratio = window.scrollY/vh;
+   console.log(ratio);
+   const opacity = ratio * 4;
+   navbar.style.setProperty("--nav-opacity", opacity)
+   navbar.style.setProperty("--nav-blur", `${opacity * 3}px`)
+
     
 //   
 }

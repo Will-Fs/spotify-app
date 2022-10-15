@@ -4,10 +4,22 @@ import { useEffect, useState } from "react";
 import { getLyrics } from "../../utility/trackInfo/getLyrics";
 
 const removeRemastered = (title) => {
-    const index = title.indexOf(" - Remastered");
+    let index = title.indexOf(" - Remastered");
     if (index != -1) {
         return title.substring(0, index);
     }
+
+    const dates = title.match(/\d{4}/g);
+    if (!dates)
+        return title;
+    if (dates.length != 0) {
+        const date = dates[dates.length-1];
+        index = title.indexOf(` - ${date} Remaster`)
+        if (index != -1) {
+            return title.substring(0, index);
+        }
+    }
+
     return title;
 }
 

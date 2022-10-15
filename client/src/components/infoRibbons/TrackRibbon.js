@@ -46,12 +46,12 @@ export const TrackRibbon = memo(({data, index, style}) => {
     const img = data.album.images ? findLargestImage(data.album.images) : null;
     const name = data.name;
 
-    console.log(data);
+    // console.log(data);
 
 
     return (
     <div className="track-ribbon" style={style}>
-        <div class="ribbon-filler"></div>
+        <div className="ribbon-filler"></div>
         <p className="track-number">{index}</p>
         <div className="track-title-info-container">
             <img src={img} onLoad={setImageSize} alt="Spotify Track Image"></img>
