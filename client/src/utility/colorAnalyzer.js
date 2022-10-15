@@ -15,7 +15,7 @@ const dSatMult = 0.7;
 const dLightMult = 0.4;
 
 const satNum = 0.75;
-const lightNum = 110;
+const lightNum = 140;
 
 const getBestColor = colors => {
   
