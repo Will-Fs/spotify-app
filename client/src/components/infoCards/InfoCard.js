@@ -1,3 +1,4 @@
+/* eslint-env jquery */
 import React, { useEffect, useState } from 'react';
 import {setImageSize} from "../../imageSize"
 import {getArtistCardData} from "./ArtistCard"
