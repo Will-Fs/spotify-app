@@ -1,25 +1,29 @@
-import { findLargestImage } from "../../utility/findLargestImage";
-import { getCardData } from "../../utility/infoCardData";
+import { findLargestImage } from '../../utility/findLargestImage';
+import { getCardData } from '../../utility/infoCardData';
 
-const formatter = Intl.NumberFormat("en", { notation: 'compact' });
+const formatter = Intl.NumberFormat('en', { notation: 'compact' });
 
 export const getMeCardData = async (props) => {
-    const d = await getCardData("me");
+  const d = await getCardData('me');
 
-    const data = d.data;
-    const additionalData = d.additionalData;
-    const firstLabel = `${formatter.format(data.followers.total)} Follower${data.followers.total>1?"s":""}\
-     • ${additionalData.playlistData.numPublicPlaylists} Public Playlist${additionalData.playlistData.numPublicPlaylists>1?"s":""}`;
+  const data = d.data;
+  const additionalData = d.additionalData;
+  const firstLabel = `${formatter.format(data.followers.total)} Follower${
+    data.followers.total > 1 ? 's' : ''
+  }\
+     • ${additionalData.playlistData.numPublicPlaylists} Public Playlist${
+    additionalData.playlistData.numPublicPlaylists > 1 ? 's' : ''
+  }`;
 
-    const img = findLargestImage(data.images);
+  const img = findLargestImage(data.images);
 
-    const color = additionalData.colorData;
-    color.foregroundColor = "var(--body-foreground-color)";
+  const color = additionalData.colorData;
+  color.foregroundColor = 'var(--body-foreground-color)';
 
-    const name = data.display_name;
+  const name = data.display_name;
 
-    const root = document.documentElement;
-    root.style.setProperty("--object-info-bg-color", color.bgTopColor);
+  const root = document.documentElement;
+  root.style.setProperty('--object-info-bg-color', color.bgTopColor);
 
-    return {img, color, firstLabel, name, type: "me"}
-}
+  return { img, color, firstLabel, name, type: 'me' };
+};

@@ -1,14 +1,14 @@
-import { api } from "../../spotifyAuth";
+import { api } from '../../spotifyAuth';
 
-export const getTrackFeaturesRaw = async id => {
-    const d = await api.getAudioFeaturesForTrack(id);
-    const data = d.body;
+export const getTrackFeaturesRaw = async (id) => {
+  const d = await api.getAudioFeaturesForTrack(id);
+  const data = d.body;
 
-    return data;
-}
+  return data;
+};
 
-export const getTrackAnalysisRaw = async id => {
-    const d = await api.getAudioAnalysisForTrack(id);
-    const data = d.body;
-    console.log(data);
-}
+export const getTrackAnalysisRaw = async (id) => {
+  const d = await api.getAudioAnalysisForTrack(id);
+  const data = d.body;
+  console.log(data);
+};
