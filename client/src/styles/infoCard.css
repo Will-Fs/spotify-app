@@ -1,0 +1,126 @@
+.card-large {
+  width: auto;
+  min-width: 20%;
+  max-width: 20vw;
+  padding: 5px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  outline: 3px solid var(--quaternary-outline);
+  box-shadow: 0 0 2px 2px var(--info-card-shadow-color);
+  text-align: center;
+  height: 70%;
+}
+
+.card-large h1 {
+  font-size: 20px;
+}
+
+.card-large h2 {
+  font-size: 15px;
+}
+
+.card-title {
+  font-size: 15px;
+}
+
+.card-object {
+  box-shadow: none;
+  width: calc(40% - 10px);
+  min-width: 600px;
+  height: 80%;
+  width: 50%;
+  max-width: none;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: right;
+  padding-left: 10%;
+}
+
+.card-object .profile-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 70%;
+  justify-content: flex-end;
+  align-items: baseline;
+}
+
+.card-object h2 {
+  font-size: 15px;
+  width: 100%;
+  text-align: left;
+}
+
+.card-object img {
+  width: 300px !important;
+}
+
+.profile-stats #name {
+  text-overflow: ellipsis;
+}
+
+.card-object.playlist,
+.card-object.track {
+  width: 80%;
+}
+.card-object.playlist .profile-stats,
+.card-object.track .profile-stats {
+  justify-content: flex-end;
+  padding-left: 2vw;
+  height: 90%;
+}
+
+.card-object.playlist .second-card-label {
+  font-size: 18px;
+  color: var(--body-foreground-color) !important;
+  margin-top: 20px;
+}
+
+.card-object.track .second-card-label {
+  font-size: 22px;
+  margin-top: 20px;
+  color: var(--body-foreground-color) !important;
+  padding-left: 20px;
+}
+
+.card-object.playlist img,
+.card-object.track img {
+  border-radius: 0 !important;
+}
+
+.card-object.track #name-main,
+.card-object.playlist #name-main {
+  /* font-size: 50px; */
+  height: 50%;
+  width: 100%;
+  text-align: left;
+  min-width: 300px;
+}
+
+.card-object.playlist .first-card-label,
+.card-object.track .first-card-label {
+  margin-top: 20px;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+.profile-stats {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.profile-stats p {
+  font-size: 12px;
+  display: inline-block;
+}

@@ -1,4 +1,5 @@
-import './App.css';
+import './styles/app.css';
+
 import React from 'react';
 import { api, auth_code, setCodes, getAuthorizeURL } from './spotifyAuth';
 import { MePage } from './components/pages/MePage';
@@ -19,21 +20,21 @@ export const formatter = Intl.NumberFormat('en', { notation: 'compact' });
 
 const GetMePage = async () => {
   return MePage().then((content) => {
-    return <div className="content-container">{content}</div>;
+    return <main>{content}</main>;
   });
 };
 
 const PlaylistInfo = async () => {
   const id = new URLSearchParams(document.location.search).get('id');
   return PlaylistPage(id).then((content) => {
-    return <div className="content-container">{content}</div>;
+    return <main>{content}</main>;
   });
 };
 
 const TrackInfo = async () => {
   const id = new URLSearchParams(document.location.search).get('id');
   return TrackPage(id).then((content) => {
-    return <div className="content-container">{content}</div>;
+    return <main>{content}</main>;
   });
 };
 

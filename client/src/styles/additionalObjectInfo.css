@@ -1,0 +1,16 @@
+.additional-object-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.additional-object-info h1 a {
+  font-size: 15px;
+  text-decoration: none;
+  color: var(--body-secondary-foreground-color);
+  letter-spacing: 1px;
+}
+
+.additional-object-info h1 a:hover {
+  border-bottom: 1px solid var(--body-secondary-foreground-color);
+}

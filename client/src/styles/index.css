@@ -21,11 +21,37 @@ body {
   background: rgba(var(--body-bg-color-value), 0.2);
 }
 
- 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   border: 8px solid rgba(0, 0, 0, 0);
   background-clip: padding-box;
   border-radius: 45px;
-  background-color: var(--body-secondary-foreground-color)
+  background-color: var(--body-secondary-foreground-color);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+body {
+  background-color: var(--body-bg-color);
+  color: var(--body-foreground-color);
+}
+
+.link {
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.title {
+  text-align: center;
+  width: 100%;
 }

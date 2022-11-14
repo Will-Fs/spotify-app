@@ -1,0 +1,10 @@
+.secondary-object-info.track {
+  align-items: flex-start;
+  height: auto;
+  max-height: none;
+}
+
+#lyrics {
+  width: 50%;
+  line-height: 35px;
+}

@@ -1,0 +1,20 @@
+content,
+.temp-container {
+  display: grid;
+  grid-template-rows: 7vh auto;
+  outline: 3px solid var(--primary-outline);
+}
+
+content {
+  padding-bottom: 50px;
+}
+
+.temp-container {
+  justify-content: center;
+  height: 90vh;
+}
+
+main {
+  width: 100%;
+  outline: 3px solid var(--secondary-outline);
+}

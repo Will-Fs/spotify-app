@@ -1,7 +1,6 @@
 import React from 'react';
+import './styles/index.css';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import './navbar.css';
 import GetApp from './App';
 import { setImageSize } from './imageSize';
 import { scrollStyles } from './scrollStyles';
@@ -9,17 +8,17 @@ import { NavBar } from './components/NavBar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <div className="container">
+  <content>
     <h1>Loading the page...</h1>
-  </div>
+  </content>
 );
 GetApp(root)
   .then((content) => {
     root.render(
-      <div className="container">
+      <content>
         <NavBar />
         {content}
-      </div>
+      </content>
     );
     setImageSize();
   })

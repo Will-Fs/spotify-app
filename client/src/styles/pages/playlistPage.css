@@ -1,0 +1,8 @@
+.additional-object-info.playlist {
+  width: 100%;
+}
+
+.secondary-object-info.playlist {
+  height: auto;
+  max-height: none;
+}

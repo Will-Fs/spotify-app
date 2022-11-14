@@ -1,0 +1,72 @@
+:root {
+  --body-bg-dark: rgb(22, 20, 24);
+  --body-bg-light: rgb(255, 253, 254);
+  --body-bg-color: var(--body-bg-dark);
+
+  --body-bg-dark-value: 22, 20, 24;
+  --body-bg-light-value: 255, 253, 254;
+  --body-bg-color-value: var(--body-bg-dark-value);
+
+  --body-secondary-bg-dark: rgb(33, 30, 36);
+  --body-secondary-bg-light: rgb(244, 245, 243);
+  --body-secondary-bg-color: var(--body-secondary-bg-dark);
+
+  --body-foreground-dark: white;
+  --body-foreground-light: black;
+  --body-foreground-color: var(--body-foreground-dark);
+
+  --body-secondary-foreground-dark: rgb(180, 180, 180);
+  --body-secondary-foreground-light: rgb(30, 30, 30);
+  --body-secondary-foreground-color: var(--body-secondary-foreground-dark);
+
+  --info-card-shadow-light: rgba(0, 0, 0, 0.1);
+  --info-card-shadow-dark: rgba(255, 255, 255, 0.1);
+  --info-card-shadow-color: var(--info-card-shadow-dark);
+
+  --outline-opacity: 0;
+  --primary-outline: rgba(255, 0, 0, var(--outline-opacity));
+  --secondary-outline: rgba(0, 0, 255, var(--outline-opacity));
+  --tertiary-outline: rgba(0, 200, 0, var(--outline-opacity));
+  --quaternary-outline: rgba(120, 120, 120, var(--outline-opacity));
+
+  --object-info-bg-color: var(--body-bg-color);
+}
+
+@import url(navbar.css);
+@import url(containers.css);
+@import url(login.css);
+@import url(mainObject.css);
+@import url(infoCard.css);
+@import url(colorSwatch.css);
+@import url(additionalObjectInfo.css);
+@import url(trackRibbon.css);
+
+@import url(pages/playlistPage.css);
+@import url(pages/trackPage.css);
+@import url(pages/mePage.css);
+
+.secondary-object-info {
+  width: 100%;
+  height: calc(50vh - 15px);
+  max-height: 500px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  background-color: rgba(var(--body-bg-color-value), 0.3);
+  padding-top: 20px;
+}
+
+.tracks-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+#profile-img {
+  border-radius: 50%;
+  width: 50%;
+  aspect-ratio: 1;
+}

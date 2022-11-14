@@ -1,0 +1,58 @@
+.color-swatches {
+  width: 120px;
+  height: 20px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.color-swatch {
+  width: 15px;
+  height: 15px;
+  outline: 1px solid var(--body-foreground-color);
+}
+
+.color-swatch:hover {
+  outline-width: 2px;
+}
+
+.color-swatch:hover .color-swatch-info {
+  display: block;
+}
+
+.color-swatch:hover .color-swatch-filler {
+  display: block;
+  display: block;
+}
+
+.color-swatch-filler {
+  background: transparent;
+  height: 5px;
+  width: 120px;
+  position: relative;
+  top: 16px;
+  left: -67.5px;
+  display: none;
+}
+
+.color-swatch-info {
+  width: 120px;
+  height: 150px;
+  background-color: var(--body-secondary-bg-color);
+  display: none;
+  z-index: 1000;
+  position: relative;
+  top: 16px;
+  left: -67.5px;
+  box-shadow: 0 0 3px 1px var(--info-card-shadow-color);
+  cursor: default;
+  text-align: left;
+  padding: 5px;
+}
+
+.color-swatch-info p {
+  font-size: 13px;
+  line-height: 30px;
+}

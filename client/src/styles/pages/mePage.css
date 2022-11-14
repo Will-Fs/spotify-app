@@ -1,0 +1,16 @@
+.public-playlists,
+.private-playlists {
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  height: auto;
+  margin-top: 30px;
+}
+
+.public-playlists .card-large,
+.private-playlists .card-large {
+  margin-bottom: 30px;
+  height: auto;
+  width: 25%;
+}
