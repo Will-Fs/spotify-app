@@ -2,7 +2,6 @@
 .temp-container {
   display: grid;
   grid-template-rows: 7vh auto;
-  outline: 3px solid var(--primary-outline);
 }
 
 .content-container {
@@ -16,5 +15,4 @@
 
 main {
   width: 100%;
-  outline: 3px solid var(--secondary-outline);
 }

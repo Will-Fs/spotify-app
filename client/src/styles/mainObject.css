@@ -8,7 +8,6 @@
 
 .object-info {
   width: 100%;
-  outline: 3px solid var(--tertiary-outline);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
