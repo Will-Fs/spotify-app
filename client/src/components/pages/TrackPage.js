@@ -2,6 +2,10 @@ import { api } from '../../spotifyAuth';
 import { InfoCard } from '../infoCards/InfoCard';
 import { useEffect, useState } from 'react';
 import { getLyrics } from '../../utility/trackInfo/getLyrics';
+import {
+  getTrackAnalysisRaw,
+  getTrackFeaturesRaw,
+} from '../../utility/trackInfo/trackAnalysis';
 
 const removeRemastered = (title) => {
   let index = title.indexOf(' - Remastered');
@@ -81,7 +85,8 @@ const RenderIt = (props) => {
 };
 
 export const TrackPage = async (id) => {
-  const _tf = await api.getAudioFeaturesForTrack(id);
+  getTrackFeaturesRaw(id).then((data) => console.log(data));
+
   const d = await api.getTrack(id);
   const data = d.body;
 

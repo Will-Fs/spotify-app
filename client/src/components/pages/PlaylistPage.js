@@ -3,7 +3,9 @@ import { InfoCard } from '../infoCards/InfoCard';
 import {
   getAllPlaylistTracks,
   calcLength,
+  getAllFeatures,
 } from '../../utility/getPlaylistTracks';
+import { getPlaylistStats } from '../../utility/statistics/playlistStats';
 import { TrackRibbon } from '../infoRibbons/TrackRibbon';
 import uuid from 'react-uuid';
 import { FixedSizeList as List } from 'react-window';
@@ -15,7 +17,11 @@ export const PlaylistPage = async (id) => {
   const data = d.body;
 
   const allTracks = await getAllPlaylistTracks(id);
+  // const
   const playlistLength = calcLength(allTracks);
+
+  const allFeatures = await getAllFeatures(allTracks);
+  const featureAnalysis = await getPlaylistStats(allFeatures);
 
   return (
     <div className="object-info">
@@ -57,13 +63,15 @@ export const PlaylistPage = async (id) => {
             {TrackRibbon}
           </List>
         </div>
-
-        {/* {allTracks.map((track) => {
-            i++;
-            return <TrackRibbon trackData={allTracks[i-1]} trackNumber={i} key={uuid()}/>;
-          })} */}
       </div>
-      <div className="additional-object-info"></div>
+      <div
+        className="additional-object-info playlist"
+        style={{ marginTop: '100px' }}
+      >
+        <h1 align="left" style={{ width: '90%' }}>
+          Analysis
+        </h1>
+      </div>
     </div>
   );
 };

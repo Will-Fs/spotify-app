@@ -10,5 +10,4 @@ export const getTrackFeaturesRaw = async (id) => {
 export const getTrackAnalysisRaw = async (id) => {
   const d = await api.getAudioAnalysisForTrack(id);
   const data = d.body;
-  console.log(data);
 };

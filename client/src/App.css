@@ -2,11 +2,10 @@
   --body-bg-dark: rgb(22, 20, 24);
   --body-bg-light: rgb(255, 253, 254);
   --body-bg-color: var(--body-bg-dark);
-  
+
   --body-bg-dark-value: 22, 20, 24;
   --body-bg-light-value: 255, 253, 254;
   --body-bg-color-value: var(--body-bg-dark-value);
-
 
   --body-secondary-bg-dark: rgb(33, 30, 36);
   --body-secondary-bg-light: rgb(244, 245, 243);
@@ -55,7 +54,8 @@ body {
   text-decoration: underline;
 }
 
-.container, .temp-container {
+.container,
+.temp-container {
   display: grid;
   grid-template-rows: 7vh auto;
   outline: 3px solid var(--primary-outline);
@@ -80,7 +80,7 @@ body {
 
 #login-button {
   background-color: rgb(30, 215, 96);
-  color:white;
+  color: white;
   border-radius: 10000px;
   font-size: 2vw;
   padding: 1vw 2vw 1vw 2vw;
@@ -111,7 +111,11 @@ body {
 }
 
 .object-bottom-container :after {
-  background-image: linear-gradient(to top, var(--body-bg-color), var(--object-info-bg-color));
+  background-image: linear-gradient(
+    to top,
+    var(--body-bg-color),
+    var(--object-info-bg-color)
+  );
   content: '';
   display: block;
   width: 100%;
@@ -208,46 +212,51 @@ body {
 
 .profile-stats #name {
   text-overflow: ellipsis;
-    /* width: 100%; */
+  /* width: 100%; */
 }
 
-.card-object.playlist, .card-object.track {
+.card-object.playlist,
+.card-object.track {
   width: 80%;
 }
-  .card-object.playlist .profile-stats, .card-object.track .profile-stats {
-    justify-content: flex-end ;
-    padding-left: 2vw;
-    height: 90%;
-  }
+.card-object.playlist .profile-stats,
+.card-object.track .profile-stats {
+  justify-content: flex-end;
+  padding-left: 2vw;
+  height: 90%;
+}
 
-  .card-object.playlist .second-card-label{
-    font-size: 18px;
-    color: var(--body-foreground-color) !important;
-    margin-top: 20px;
-  }
+.card-object.playlist .second-card-label {
+  font-size: 18px;
+  color: var(--body-foreground-color) !important;
+  margin-top: 20px;
+}
 
-  .card-object.track .second-card-label {
-    font-size: 22px;
-    margin-top: 20px;
-    color: var(--body-foreground-color) !important;
-    padding-left: 20px;
-  }
+.card-object.track .second-card-label {
+  font-size: 22px;
+  margin-top: 20px;
+  color: var(--body-foreground-color) !important;
+  padding-left: 20px;
+}
 
-  .card-object.playlist img, .card-object.track img {
-    border-radius: 0 !important;
-  }
+.card-object.playlist img,
+.card-object.track img {
+  border-radius: 0 !important;
+}
 
-  .card-object.track #name-main, .card-object.playlist #name-main {
-    /* font-size: 50px; */
-    height: 50%;
-    width: 100%;
-    text-align: left;
-    min-width: 300px;
-  }
+.card-object.track #name-main,
+.card-object.playlist #name-main {
+  /* font-size: 50px; */
+  height: 50%;
+  width: 100%;
+  text-align: left;
+  min-width: 300px;
+}
 
-  .card-object.playlist .first-card-label, .card-object.track .first-card-label {
-    margin-top: 20px;
-  }
+.card-object.playlist .first-card-label,
+.card-object.track .first-card-label {
+  margin-top: 20px;
+}
 
 .profile-info {
   display: flex;
@@ -265,7 +274,7 @@ body {
 
 .profile-stats p {
   font-size: 12px;
-  display: inline-block
+  display: inline-block;
 }
 
 .object-bottom-container {
@@ -290,56 +299,54 @@ body {
   justify-content: space-evenly;
 }
 
-  
+.color-swatch {
+  width: 15px;
+  height: 15px;
+  outline: 1px solid var(--body-foreground-color);
+}
 
-  .color-swatch {
-    width: 15px;
-    height: 15px;
-    outline: 1px solid var(--body-foreground-color);
-  }
+.color-swatch:hover {
+  outline-width: 2px;
+}
 
-  .color-swatch:hover {
-    outline-width: 2px;
-  }
+.color-swatch:hover .color-swatch-info {
+  display: block;
+}
 
-  .color-swatch:hover .color-swatch-info {
-    display: block;
-  }
+.color-swatch:hover .color-swatch-filler {
+  display: block;
+  display: block;
+}
 
-  .color-swatch:hover .color-swatch-filler {
-    display: block;
-    display: block;
-  }
+.color-swatch-filler {
+  background: transparent;
+  height: 5px;
+  width: 120px;
+  position: relative;
+  top: 16px;
+  left: -67.5px;
+  display: none;
+}
 
-  .color-swatch-filler {
-    background: transparent;
-    height: 5px;
-    width: 120px;
-    position: relative;
-    top: 16px;
-    left: -67.5px;
-    display: none;
-  }
+.color-swatch-info {
+  width: 120px;
+  height: 150px;
+  background-color: var(--body-secondary-bg-color);
+  display: none;
+  z-index: 1000;
+  position: relative;
+  top: 16px;
+  left: -67.5px;
+  box-shadow: 0 0 3px 1px var(--info-card-shadow-color);
+  cursor: default;
+  text-align: left;
+  padding: 5px;
+}
 
-  .color-swatch-info {
-    width: 120px;
-    height: 150px;
-    background-color: var(--body-secondary-bg-color);
-    display: none;
-    z-index: 1000;
-    position: relative;
-    top: 16px;
-    left: -67.5px;
-    box-shadow: 0 0 3px 1px var(--info-card-shadow-color);
-    cursor: default;
-    text-align: left;
-    padding: 5px;
-  }
-
-  .color-swatch-info p {
-    font-size: 13px;
-    line-height: 30px;
-  }
+.color-swatch-info p {
+  font-size: 13px;
+  line-height: 30px;
+}
 
 .additional-object-info {
   display: flex;
@@ -354,6 +361,10 @@ body {
   letter-spacing: 1px;
 }
 
+.additional-object-info.playlist {
+  width: 100%;
+}
+
 .additional-object-info h1 a:hover {
   border-bottom: 1px solid var(--body-secondary-foreground-color);
 }
@@ -363,7 +374,8 @@ body {
   max-height: none;
 }
 
-.track-ribbon, .tracks-header {
+.track-ribbon,
+.tracks-header {
   width: 80%;
   min-width: 600px;
   display: grid;
@@ -383,7 +395,6 @@ body {
   grid-template-columns: 6.5% 4% 40% 25% 17% 5%;
 }
 
-
 .track-ribbon:hover {
   backdrop-filter: brightness(135%);
 }
@@ -398,7 +409,7 @@ body {
 .tracks-header {
   transition: 0.5s;
   border-bottom-width: 3px;
-padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .tracks-header p {
@@ -414,54 +425,58 @@ padding-bottom: 10px;
   height: calc(65%);
 }
 
-  .track-title-info  {
-    height: 70%;
-    width: calc(100% - 80px);
-    padding-left: 10%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
+.track-title-info {
+  height: 70%;
+  width: calc(100% - 80px);
+  padding-left: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-  .track-ribbon-name {
-    height: 80%;
-    width: inherit;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    font-size: 15px;
-  }
+.track-ribbon-name {
+  height: 80%;
+  width: inherit;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 15px;
+}
 
-  .track-ribbon-artist {
-    font-size: 12px;
-  }
+.track-ribbon-artist {
+  font-size: 12px;
+}
 
-  .track-ribbon-artist, .track-album-name, .track-date-added, .track-ribbon-duration {
-    color: var(--body-secondary-foreground-color);
-    font-weight: 500;
-  }
+.track-ribbon-artist,
+.track-album-name,
+.track-date-added,
+.track-ribbon-duration {
+  color: var(--body-secondary-foreground-color);
+  font-weight: 500;
+}
 
-  .track-album-name {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 80% !important;  
-  }
+.track-album-name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 80% !important;
+}
 
-  .track-ribbon p {
-    width: 100%;
-    /* text-align: center; */
-  }
+.track-ribbon p {
+  width: 100%;
+  /* text-align: center; */
+}
 
-  .track-ribbon img {
-    width: 80px;
-  }
+.track-ribbon img {
+  width: 80px;
+}
 
-  .track-number {
-    text-align: left !important;
-  }
+.track-number {
+  text-align: left !important;
+}
 
-.public-playlists, .private-playlists {
+.public-playlists,
+.private-playlists {
   width: 70%;
   display: flex;
   flex-wrap: wrap;
@@ -470,7 +485,8 @@ padding-bottom: 10px;
   margin-top: 30px;
 }
 
-.public-playlists .card-large, .private-playlists .card-large {
+.public-playlists .card-large,
+.private-playlists .card-large {
   margin-bottom: 30px;
   height: auto;
   width: 25%;

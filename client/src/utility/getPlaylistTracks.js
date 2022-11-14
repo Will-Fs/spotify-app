@@ -1,4 +1,5 @@
 import { api } from '../spotifyAuth';
+import { getTrackFeaturesRaw } from './trackInfo/trackAnalysis';
 
 export const calcLength = (tracks) => {
   let totalTime = 0;
@@ -16,6 +17,18 @@ export const calcLength = (tracks) => {
   return `${hours} hr ${minutes} min`;
 };
 
+export const getAllFeatures = async (tracks) => {
+  const promises = [];
+  tracks.forEach((track) => {
+    // console.log(track);
+    promises.push(getTrackFeaturesRaw(track.track.id));
+  });
+
+  return Promise.allSettled(promises).then((features) => {
+    return features.map((feature) => feature.value);
+  });
+};
+
 export const getAllPlaylistTracks = async (id) => {
   let allTracks = [];
   const numTracks = (await api.getPlaylistTracks(id, { limit: 1 })).body.total;
@@ -31,16 +44,18 @@ export const getAllPlaylistTracks = async (id) => {
   batches.forEach((batch) => {
     allTracks.push(...batch.value.body.items);
   });
-  // const getTracks = async offset => {
-  //     const d = await
-  //     const data = d.body
-  //     allTracks.push(...data.items);
 
-  //     if (data.next) {
-  //         await getTracks(offset + 100);
-  //     }
-  // }
-
-  const d = await api.getPlaylistTracks(id);
   return allTracks;
+};
+
+export const getTracksFromIds = async (ids) => {
+  const promises = [];
+
+  ids.forEach((id) => {
+    promises.push(api.getTrack(id));
+  });
+
+  return Promise.allSettled(promises).then((tracks) => {
+    return tracks.map((track) => track.value);
+  });
 };
