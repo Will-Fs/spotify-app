@@ -1,6 +1,5 @@
 /* eslint-env jquery */
 import React, { useEffect, useState } from 'react';
-import { setImageSize } from '../../imageSize';
 import { getArtistCardData } from './ArtistCard';
 import { getTrackCardData } from './TrackCard';
 import { getMeCardData } from './MeCard';
@@ -34,7 +33,6 @@ export const InfoCardRender = (data) => {
     >
       {data.titleHeader ?? null}
       <img
-        onLoad={setImageSize}
         id="profile-img"
         src={data.img}
         alt={`Spotify Info Card`}

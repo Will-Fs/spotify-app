@@ -1,5 +1,4 @@
 import { get } from 'spotify-web-api-node/src/http-manager';
-import { setImageSize } from '../../imageSize';
 import { findLargestImage } from '../../utility/findLargestImage';
 const { DateTime } = require('luxon');
 import { React, memo } from 'react';
@@ -52,7 +51,7 @@ export const TrackRibbon = memo(({ data, index, style }) => {
       <div className="ribbon-filler"></div>
       <p className="track-number">{index}</p>
       <div className="track-title-info-container">
-        <img src={img} onLoad={setImageSize} alt="Spotify Track Image"></img>
+        <img src={img} alt="Spotify Track Image"></img>
         <div className="track-title-info">
           <h3
             className={`track-ribbon-name link`}

@@ -2,7 +2,6 @@ import React from 'react';
 import './styles/index.css';
 import ReactDOM from 'react-dom/client';
 import GetApp from './App';
-import { setImageSize } from './imageSize';
 import { scrollStyles } from './scrollStyles';
 import { NavBar } from './components/NavBar';
 
