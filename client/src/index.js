@@ -7,22 +7,17 @@ import { NavBar } from './components/NavBar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <content>
+  <div className="content-container">
     <h1>Loading the page...</h1>
-  </content>
+  </div>
 );
-GetApp(root)
-  .then((content) => {
-    root.render(
-      <content>
-        <NavBar />
-        {content}
-      </content>
-    );
-    setImageSize();
-  })
-  .then(() => {
-    setImageSize();
-  });
+GetApp(root).then((content) => {
+  root.render(
+    <div className="content-container">
+      <NavBar />
+      {content}
+    </div>
+  );
+});
 
 document.onscroll = scrollStyles;

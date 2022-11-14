@@ -1,4 +1,3 @@
-import { get } from 'spotify-web-api-node/src/http-manager';
 import { findLargestImage } from '../../utility/findLargestImage';
 const { DateTime } = require('luxon');
 import { React, memo } from 'react';
