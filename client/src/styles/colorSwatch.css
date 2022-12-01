@@ -8,6 +8,12 @@
   justify-content: space-evenly;
 }
 
+@media (max-width: 1000px) {
+  .color-swatches {
+    display: none;
+  }
+}
+
 .color-swatch {
   width: 15px;
   height: 15px;

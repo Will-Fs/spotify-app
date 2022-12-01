@@ -1,37 +1,42 @@
 nav {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 10% 20% 70%;
-    position: sticky;
-    top: 0;
-    --nav-opacity: 0;
-    --nav-blur: 5px;
-    backdrop-filter: blur(var(--nav-blur));
-    z-index: 100;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: clamp(20px, 5vh, 80px) 20% 70%;
+  position: sticky;
+  top: 0;
+  --nav-opacity: 0;
+  --nav-blur: 5px;
+  backdrop-filter: blur(var(--nav-blur));
+  z-index: 100;
+  box-sizing: border-box;
+  padding-left: clamp(20px, 5%, 50px);
 }
 
 nav:after {
-    width: 100%;
-    height: 100%;
-    content: "";
-    position: absolute;
-    background-image: linear-gradient(var(--object-info-bg-color), var(--object-info-bg-color));
-    z-index: -1;
-    opacity: var(--nav-opacity);
-    filter: brightness(max(min(calc(0.6/var(--nav-opacity)), 1), 0.2));
+  width: 100%;
+  height: 100%;
+  content: '';
+  position: absolute;
+  background-image: linear-gradient(
+    var(--object-info-bg-color),
+    var(--object-info-bg-color)
+  );
+  z-index: -1;
+  opacity: var(--nav-opacity);
+  filter: brightness(max(min(calc(0.6 / var(--nav-opacity)), 1), 0.2));
 }
 
 .nav-item {
-    margin: auto;
+  margin: auto;
 }
 
 #home {
-    width: 5vh;
-    height: 5vh;
+  width: 100%;
+  aspect-ratio: 1;
 }
 
 #home-icon {
-    width: inherit;
-    height: auto;
+  width: inherit;
+  height: auto;
 }

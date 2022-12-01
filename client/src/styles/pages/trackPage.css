@@ -8,3 +8,13 @@
   width: 50%;
   line-height: 35px;
 }
+
+.card-object.track #profile-img {
+  z-index: 101;
+}
+
+.card-object.track #name-main {
+  position: sticky;
+  top: 0;
+  z-index: 101;
+}

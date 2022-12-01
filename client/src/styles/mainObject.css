@@ -1,7 +1,8 @@
 .object-info-container {
   width: 100%;
+  min-height: 300px;
   height: calc(50vh - 15px);
-  max-height: 500px;
+  max-height: 300px;
   padding-top: 30px;
   /* background-color: var(--object-info-bg-color); */
 }

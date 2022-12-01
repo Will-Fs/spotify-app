@@ -6,6 +6,7 @@
   justify-content: space-evenly;
   height: auto;
   margin-top: 30px;
+  gap: 20px 20px;
 }
 
 .public-playlists .card-large,

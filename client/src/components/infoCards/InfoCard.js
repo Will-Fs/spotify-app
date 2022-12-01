@@ -8,7 +8,7 @@ import uuid from 'react-uuid';
 import { ColorSwatch } from '../ColorSwatch';
 
 export const cardBackground = (bottomColor, topColor) => {
-  // return 'none'
+  return 'none';
   return `linear-gradient(to top, ${bottomColor}, ${topColor}`;
 };
 
