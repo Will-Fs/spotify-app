@@ -18,10 +18,7 @@ nav:after {
   height: 100%;
   content: '';
   position: absolute;
-  background-image: linear-gradient(
-    var(--object-info-bg-color),
-    var(--object-info-bg-color)
-  );
+  background: none;
   z-index: -1;
   opacity: var(--nav-opacity);
   filter: brightness(max(min(calc(0.6 / var(--nav-opacity)), 1), 0.2));

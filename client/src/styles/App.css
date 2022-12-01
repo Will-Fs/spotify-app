@@ -46,6 +46,7 @@ body[data-theme='light'] {
 @import url(colorSwatch.css);
 @import url(additionalObjectInfo.css);
 @import url(trackRibbon.css);
+@import url(charts.css);
 
 @import url(pages/playlistPage.css);
 @import url(pages/trackPage.css);

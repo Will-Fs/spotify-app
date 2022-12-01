@@ -9,6 +9,8 @@ import { getPlaylistStats } from '../../utility/statistics/playlistStats';
 import { TrackRibbon } from '../infoRibbons/TrackRibbon';
 import uuid from 'react-uuid';
 import { FixedSizeList as List } from 'react-window';
+import FeaturesBarChart from '../charts/FeaturesBarChart';
+import FeaturesRadarChart from '../charts/FeaturesRadarChart';
 
 export const PlaylistPage = async (id) => {
   let tracks = [];
@@ -21,7 +23,7 @@ export const PlaylistPage = async (id) => {
   const playlistLength = calcLength(allTracks);
 
   const allFeatures = await getAllFeatures(allTracks);
-  const featureAnalysis = await getPlaylistStats(allFeatures);
+  const featureAnalysis = getPlaylistStats(allFeatures);
 
   return (
     <div className="object-info">
@@ -71,6 +73,8 @@ export const PlaylistPage = async (id) => {
         <h1 align="left" style={{ width: '90%' }}>
           Analysis
         </h1>
+        <FeaturesBarChart data={featureAnalysis} />
+        <FeaturesRadarChart data={featureAnalysis} />
       </div>
     </div>
   );

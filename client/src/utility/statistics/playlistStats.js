@@ -3,15 +3,15 @@ import { extent, mean, standardDeviation } from 'simple-statistics';
 const statsWeCareAbout = [
   'acousticness',
   'danceability',
-  'duration_ms',
+  // 'duration_ms',
   'energy',
   'instrumentalness',
   'liveness',
-  'loudness',
+  // 'loudness',
   // 'mode',
   'speechiness',
-  'tempo',
-  'time_signature',
+  // 'tempo',
+  // 'time_signature',
   'valence',
 ];
 
@@ -21,7 +21,7 @@ export const getPlaylistStats = (tracks) => {
   tracks.forEach((track) => {
     for (const [key, value] of Object.entries(track)) {
       if (statsWeCareAbout.includes(key)) {
-        console.log(rawStats);
+        // console.log(rawStats);
         if (rawStats[key] === undefined) {
           rawStats[key] = [value];
           continue;
@@ -44,5 +44,6 @@ export const getPlaylistStats = (tracks) => {
       relativeStandardDeviation: stdDev / avg,
     };
   }
-  console.log(stats);
+  return stats;
+  // console.log(stats);
 };

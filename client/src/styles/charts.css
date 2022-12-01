@@ -1,0 +1,19 @@
+.bar-chart text {
+  fill: white;
+}
+
+.bar-chart rect {
+  fill: var(--object-info-bg-color);
+}
+
+.radar-chart path {
+  fill: var(--object-info-bg-color) !important;
+  fill-opacity: 0.5 !important;
+  stroke: var(--object-info-bg-color) !important;
+  stroke-opacity: 0.8 !important;
+}
+
+.rv-xy-plot__axis__tick__text {
+  fill: hsl(0, 0%, 100%, 0.4);
+  font-size: 12px;
+}
