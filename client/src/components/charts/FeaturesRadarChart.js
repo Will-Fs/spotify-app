@@ -1,24 +1,5 @@
 import { RadarChart } from 'react-vis';
 
-const RADAR_PROPS = {
-  data: [
-    {
-      C: 30,
-      VisualBasics: 60,
-      Excel: 40,
-      Access: 40,
-    },
-  ],
-  domains: [
-    { name: 'C', domain: [0, 100] },
-    { name: 'VisualBasics', domain: [0, 100] },
-    { name: 'Excel', domain: [0, 100] },
-    { name: 'Access', domain: [0, 100] },
-  ],
-  height: 300,
-  width: 400,
-};
-
 export default function FeaturesRadarChart(props) {
   const data = props.data;
   const radarProps = {
@@ -33,7 +14,7 @@ export default function FeaturesRadarChart(props) {
     radarProps.data[0][stat] = data[stat].avg;
   }
 
-  console.log(radarProps);
+  // console.log(radarProps);
   return (
     <div className="radar-chart">
       <RadarChart

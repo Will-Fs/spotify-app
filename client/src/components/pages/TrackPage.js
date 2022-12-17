@@ -5,7 +5,9 @@ import { getLyrics } from '../../utility/trackInfo/getLyrics';
 import {
   getTrackAnalysisRaw,
   getTrackFeaturesRaw,
+  getTrackFeatures,
 } from '../../utility/trackInfo/trackAnalysis';
+import FeaturesBarChart from '../charts/FeaturesBarChart';
 
 const removeRemastered = (title) => {
   let index = title.indexOf(' - Remastered');
@@ -79,13 +81,14 @@ const RenderIt = (props) => {
           id={props.artistId}
           style={{ background: 'none' }}
         ></InfoCard>
+        <FeaturesBarChart data={getTrackFeatures(props.id)} />
       </div>
     </div>
   );
 };
 
 export const TrackPage = async (id) => {
-  getTrackFeaturesRaw(id).then((data) => console.log(data));
+  const trackFeatures = await getTrackFeatures(id);
 
   const d = await api.getTrack(id);
   const data = d.body;
